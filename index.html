@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#f2f2f2">
 <title>Para ti</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +16,8 @@
 const CONFIG = {
   ella: "Belen",                    // su nombre o como le dices
   yo: "Jesús",                        // tu nombre (sale en la llamada)
+  contacto: "Jesús 💛",                // cómo te tiene guardado en su iPhone (así sale en la llamada falsa)
+  etiqueta: "celular",                // lo que sale arriba de tu nombre: "celular", "iPhone", "WhatsApp audio"...
   inicio: "2026-07-13T00:00:00",      // el día que empezaron (año-mes-díaThh:mm)
 
   foto: "",                           // opcional: "yo.jpg" -> tu foto en la llamada
@@ -70,7 +72,7 @@ const CONFIG = {
   --glass:rgba(255,255,255,.08); --line:rgba(255,255,255,.16);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background:#000;color:#fff;font-family:Inter,system-ui,sans-serif;
+html,body{height:100%;overflow:hidden;overscroll-behavior:none;touch-action:manipulation;-webkit-text-size-adjust:100%;background:#000;color:#fff;font-family:Inter,system-ui,sans-serif;
   -webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .scene{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -116,49 +118,44 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 #s-lie p{opacity:0;transition:opacity 1s}
 #s-lie p.show{opacity:1}
 
-/* ---------- 2 · llamada ---------- */
-#s-call{justify-content:space-between;background:radial-gradient(120% 80% at 50% 0%,#2a2214 0%,#120e08 55%,#050403 100%)}
-#call-bg{position:absolute;inset:-40px;background-size:cover;background-position:center;filter:blur(40px) brightness(.45);opacity:0;transition:opacity 1s}
-.call-top{position:relative;margin-top:40px}
-#call-status{font-size:15px;color:rgba(255,255,255,.7);font-variant-numeric:tabular-nums}
-#call-name{font-size:clamp(30px,9vw,40px);font-weight:300;margin-top:6px}
-.call-mid{position:relative;display:flex;flex-direction:column;align-items:center;flex:1;justify-content:center;width:100%}
-.avatar{position:relative;width:132px;height:132px;border-radius:50%;background:linear-gradient(135deg,#f5c66b,#b8862f);color:#1a1408;
-  display:grid;place-items:center;font-family:Fraunces,serif;font-size:56px;transition:transform .8s ease}
-.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
-.avatar::before,.avatar::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(245,198,107,.6);animation:ringpulse 2s ease-out infinite}
-.avatar::after{animation-delay:1s}
-@keyframes ringpulse{from{transform:scale(1);opacity:.9}to{transform:scale(1.9);opacity:0}}
-#s-call.oncall .avatar{transform:scale(.62) translateY(-30px)}
-#s-call.oncall .avatar::before,#s-call.oncall .avatar::after{animation:none;opacity:0}
-.wave{display:flex;gap:5px;height:34px;align-items:center;opacity:0;transition:opacity .6s;margin-top:-10px}
-.wave i{display:block;width:4px;height:8px;border-radius:2px;background:var(--accent)}
-#s-call.oncall .wave{opacity:1}
-#s-call.oncall .wave i{animation:wv .9s ease-in-out infinite}
-.wave i:nth-child(even){background:var(--pistache)}
-.wave i:nth-child(2){animation-delay:-.2s!important}.wave i:nth-child(3){animation-delay:-.45s!important}
-.wave i:nth-child(4){animation-delay:-.1s!important}.wave i:nth-child(5){animation-delay:-.6s!important}
-@keyframes wv{0%,100%{height:6px}50%{height:30px}}
-#s-call.ended .wave{opacity:0}
-#caption{margin-top:26px;min-height:4.2em;max-width:320px;font-family:Fraunces,serif;font-size:22px;line-height:1.35;opacity:0;transition:opacity .35s}
-.call-btns{position:relative;display:flex;justify-content:space-around;width:100%;max-width:340px;margin-bottom:40px;transition:opacity .5s}
-#s-call.oncall .call-btns{display:none}
-.cbtn{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.85);transition:transform .4s,opacity .4s}
-.cbtn span{width:74px;height:74px;border-radius:50%;display:grid;place-items:center}
-.cbtn svg{width:32px;height:32px;fill:#fff}
-#decline span{background:#ff3b30}#decline svg{transform:rotate(135deg)}
-#accept span{background:#34c759;animation:bounce 1.2s ease-in-out infinite}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+/* ---------- 2 · llamada (igual a la del iPhone) ---------- */
+#s-call{justify-content:space-between;padding:calc(env(safe-area-inset-top) + 34px) 26px calc(env(safe-area-inset-bottom) + 30px);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;
+  background:linear-gradient(180deg,#4a4a4f 0%,#2c2c30 45%,#161618 100%)}
+#call-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1s}
+#call-bg.photo{opacity:1}
+#call-bg.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 32%,rgba(0,0,0,0) 52%,rgba(0,0,0,.65) 100%)}
+.ios-top{position:relative;width:100%}
+#call-label{font-size:17px;color:rgba(235,235,245,.62);letter-spacing:-.2px;font-variant-numeric:tabular-nums}
+#call-name{font-size:36px;font-weight:400;letter-spacing:-.5px;line-height:1.15;margin-top:3px}
+.call-mid{position:relative;flex:1;display:flex;align-items:center;justify-content:center;width:100%}
+#caption{max-width:320px;font-size:21px;font-weight:500;line-height:1.35;letter-spacing:-.3px;text-shadow:0 1px 14px rgba(0,0,0,.4);opacity:0;transition:opacity .35s}
+.ios-btn{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;letter-spacing:-.1px;color:#fff}
+.ios-btn span{display:grid;place-items:center;border-radius:50%;color:#fff;background:rgba(255,255,255,.2);
+  backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);transition:background .15s,color .15s,transform .15s}
+.ios-btn:active span{transform:scale(.93)}
+.ios-incoming{position:relative;width:100%;max-width:330px;display:flex;flex-direction:column;gap:30px}
+.ios-incoming .ios-btn{width:96px}
+.ios-row{display:flex;justify-content:space-between}
+.ios-row.solo{justify-content:center}
+.ios-btn.sm span{width:54px;height:54px}.ios-btn.sm svg{width:25px;height:25px}
+.ios-btn.big span{width:76px;height:76px}.ios-btn.big svg{width:34px;height:34px}
+.ios-btn.red span{background:#ff3b30}.ios-btn.green span{background:#34c759}
+#decline svg,#end svg{transform:rotate(135deg)}
 #decline.shake{animation:shake .4s}
 #decline.gone{display:none}
-#toast{position:absolute;left:50%;bottom:150px;transform:translateX(-50%);background:rgba(255,255,255,.14);backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);padding:10px 18px;border-radius:999px;font-size:14px;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+.ios-incall{position:relative;display:none;grid-template-columns:repeat(3,78px);justify-content:space-between;row-gap:24px;width:100%;max-width:296px}
+.ios-incall .ios-btn span{width:78px;height:78px}
+.ios-incall .ios-btn svg{width:32px;height:32px}
+.ios-incall .ios-btn.on span{background:#fff;color:#000}
+#s-call.oncall .ios-incoming{display:none}
+#s-call.oncall .ios-incall{display:grid}
+#s-call.ended .ios-incall{opacity:.35;pointer-events:none;transition:opacity .4s}
+#toast{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom) + 292px);transform:translateX(-50%);background:rgba(255,255,255,.18);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:10px 18px;border-radius:999px;font-size:15px;white-space:nowrap;
+  opacity:0;transition:opacity .3s;pointer-events:none;z-index:3}
 #toast.show{opacity:1}
-.hangup{position:relative;margin-bottom:40px;width:74px;height:74px;border-radius:50%;background:#ff3b30;display:none;place-items:center}
-.hangup svg{width:32px;height:32px;fill:#fff;transform:rotate(135deg)}
-#s-call.oncall .hangup{display:grid;opacity:.9}
-#s-call.ended .hangup{opacity:.25}
 
 /* ---------- 3 · latido ---------- */
 #s-heart{background:radial-gradient(90% 70% at 50% 45%,#2b2312 0%,#110d07 60%,#050403 100%)}
@@ -322,24 +319,33 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   <p id="lie-3">🔊 sube el volumen</p>
 </section>
 
-<!-- 2 · llamada -->
+<!-- 2 · llamada (igual a la del iPhone) -->
 <section id="s-call" class="scene">
   <div id="call-bg"></div>
-  <div class="call-top">
-    <p id="call-status">Llamada entrante…</p>
+  <div class="ios-top">
+    <p id="call-label">celular</p>
     <h2 id="call-name"></h2>
   </div>
-  <div class="call-mid">
-    <div class="avatar" id="avatar"></div>
-    <div class="wave"><i></i><i></i><i></i><i></i><i></i></div>
-    <p id="caption"></p>
-  </div>
+  <div class="call-mid"><p id="caption"></p></div>
   <div id="toast"></div>
-  <div class="call-btns">
-    <button class="cbtn" id="decline"><span><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></span>Rechazar</button>
-    <button class="cbtn" id="accept"><span><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></span>Contestar</button>
+  <div class="ios-incoming">
+    <div class="ios-row">
+      <button class="ios-btn sm" id="remind"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="7.5"/><path d="M12 9.2V13l2.6 1.8M4.5 4.3 2.4 6.4M19.5 4.3l2.1 2.1"/></svg></span>Recordarme</button>
+      <button class="ios-btn sm" id="message"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.8 2 11.4c0 2.6 1.4 4.9 3.7 6.4-.2 1.2-.8 2.3-1.7 3.2 1.9-.1 3.6-.8 4.8-1.8 1 .3 2.1.4 3.2.4 5.5 0 10-3.7 10-8.2S17.5 3 12 3z"/></svg></span>Mensaje</button>
+    </div>
+    <div class="ios-row" id="row-main">
+      <button class="ios-btn big red" id="decline"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></span>Rechazar</button>
+      <button class="ios-btn big green" id="accept"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></span>Aceptar</button>
+    </div>
   </div>
-  <div class="hangup" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div>
+  <div class="ios-incall">
+    <button class="ios-btn" data-toggle><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9.2v5.6c0 .4.3.7.7.7h3.4l4.6 4c.5.4 1.3.1 1.3-.6V5.1c0-.7-.8-1-1.3-.6l-4.6 4H3.7c-.4 0-.7.3-.7.7z"/><path d="M16.2 8.6a5 5 0 0 1 0 6.8M18.8 6a8.6 8.6 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>altavoz</button>
+    <button class="ios-btn" id="facetime"><span><svg viewBox="0 0 24 24" fill="currentColor"><rect x="1.8" y="6" width="13.6" height="12" rx="3.2"/><path d="M16.8 10.3 21 7.6c.5-.3 1.2 0 1.2.6v7.6c0 .6-.7.9-1.2.6l-4.2-2.7z"/></svg></span>FaceTime</button>
+    <button class="ios-btn" data-toggle><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="9" y="2.8" width="6" height="11.4" rx="3" fill="currentColor" stroke="none"/><path d="M5.6 11a6.4 6.4 0 0 0 12.8 0M12 17.6V21M8.6 21h6.8M4 3.5l16 17"/></svg></span>silenciar</button>
+    <button class="ios-btn" id="more"><span><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></span>más</button>
+    <button class="ios-btn red" id="end"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></span>finalizar</button>
+    <button class="ios-btn" id="keypad"><span><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="3.5" r="1.9"/><circle cx="12" cy="3.5" r="1.9"/><circle cx="18" cy="3.5" r="1.9"/><circle cx="6" cy="9.5" r="1.9"/><circle cx="12" cy="9.5" r="1.9"/><circle cx="18" cy="9.5" r="1.9"/><circle cx="6" cy="15.5" r="1.9"/><circle cx="12" cy="15.5" r="1.9"/><circle cx="18" cy="15.5" r="1.9"/><circle cx="12" cy="21.2" r="1.9"/></svg></span>teclado</button>
+  </div>
 </section>
 
 <!-- 3 · latido -->
@@ -441,7 +447,20 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 <script>
 const $ = s => document.querySelector(s);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-const vib = p => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} };
+const canVibrate = typeof navigator.vibrate === 'function';
+const haptic = (() => {
+  const l = document.createElement('label'), i = document.createElement('input');
+  i.type = 'checkbox'; i.setAttribute('switch', ''); l.appendChild(i); l.setAttribute('aria-hidden', 'true');
+  l.style.cssText = 'position:fixed;left:-99px;top:0;width:1px;height:1px;opacity:0;pointer-events:none';
+  document.body.appendChild(l); return l;
+})();
+// iPhone no tiene navigator.vibrate(): cada clic a un switch nativo da un toque háptico (iOS 18+)
+const vib = p => {
+  if (!p) { if (canVibrate) navigator.vibrate(0); return; }
+  if (canVibrate) { try { navigator.vibrate(p); } catch (e) {} return; }
+  let t = 0;
+  (Array.isArray(p) ? p : [p]).forEach((d, i) => { if (i % 2 === 0) setTimeout(() => haptic.click(), t); t += d; });
+};
 const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
 document.querySelectorAll('[data-ella]').forEach(e => e.textContent = CONFIG.ella);
@@ -457,8 +476,10 @@ function avisar(msg, prioridad = 3, tags = 'heart') {
 
 /* ---------- audio sintetizado (no necesita archivos) ---------- */
 let AC;
+// En iPhone: 'playback' hace que suene aunque tenga el modo silencio puesto
+const audioMode = t => { try { if (navigator.audioSession) navigator.audioSession.type = t; } catch (e) {} };
 function ac() {
-  if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+  if (!AC) { audioMode('playback'); AC = new (window.AudioContext || window.webkitAudioContext)(); }
   if (AC.state === 'suspended') AC.resume();
   return AC;
 }
@@ -529,8 +550,16 @@ function fxLoop() {
 /* ---------- escenas ---------- */
 let current = $('.scene.active');
 const enter = {};
+const THEME = { 's-fake': '#f2f2f2', 's-lie': '#000000', 's-call': '#4a4a4f', 's-heart': '#0d0a06', 's-stars': '#05040f',
+  's-cake': '#0d0806', 's-scratch': '#0d0a06', 's-final': '#0d0a06', 's-real': '#04100a' };
+function setTheme(id) {
+  const c = id === 's-call' && CONFIG.foto ? '#000000' : (THEME[id] || '#000000');
+  document.querySelector('meta[name=theme-color]').content = c;
+  document.documentElement.style.background = document.body.style.background = c;
+}
+setTheme('s-fake');
 function go(id) {
-  const next = document.getElementById(id);
+  const next = document.getElementById(id); setTheme(id);
   current.classList.remove('active'); next.classList.add('active'); current = next;
   enter[id] && enter[id]();
 }
@@ -566,36 +595,46 @@ enter['s-lie'] = async () => {
   await sleep(2000); go('s-call');
 };
 
-/* 2 · llamada */
+/* 2 · llamada (igual a la del iPhone) */
 let ringT;
 function ring() {
   [659, 784, 988, 784, 659, 784, 988, 1175].forEach((f, i) => tone(f, .16, { type: 'triangle', vol: .22, when: i * .14 }));
   vib([450, 250, 450]);
 }
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 1900);
+}
 enter['s-call'] = () => {
-  $('#call-name').textContent = CONFIG.yo + ' 💛';
-  const av = $('#avatar');
-  if (CONFIG.foto) {
-    av.innerHTML = `<img src="${CONFIG.foto}" alt="">`;
-    const bg = $('#call-bg'); bg.style.backgroundImage = `url("${CONFIG.foto}")`; bg.style.opacity = 1;
-  } else av.textContent = [...CONFIG.yo][0].toUpperCase();
+  $('#call-name').textContent = CONFIG.contacto || CONFIG.yo;
+  $('#call-label').textContent = CONFIG.etiqueta || 'celular';
+  if (CONFIG.foto) { const bg = $('#call-bg'); bg.style.backgroundImage = `url("${CONFIG.foto}")`; bg.classList.add('photo'); }
   ring(); ringT = setInterval(ring, 2800);
 };
 const declineMsgs = ['Ese botón no funciona hoy 😌', 'Nop. Inténtalo con el verde', 'Ya, contesta 🥺'];
 let declines = 0;
 $('#decline').addEventListener('click', () => {
-  const t = $('#toast'), d = $('#decline');
-  t.textContent = declineMsgs[Math.min(declines, 2)]; t.classList.add('show');
+  const d = $('#decline');
+  toast(declineMsgs[Math.min(declines, 2)]);
   d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake'); vib(80);
-  if (++declines === 3) { setTimeout(() => d.classList.add('gone'), 450); avisar('😂 Intentó rechazar tu llamada 3 veces', 2, 'joy'); }
-  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 1800);
+  if (++declines === 3) {
+    setTimeout(() => { d.classList.add('gone'); $('#row-main').classList.add('solo'); }, 450);
+    avisar('😂 Intentó rechazar tu llamada 3 veces', 2, 'joy');
+  }
 });
+$('#remind').addEventListener('click', () => { toast('¿Recordarte? Hoy no se te olvida nada 😌'); vib(20); });
+$('#message').addEventListener('click', () => { toast('Nada de mensajes. Contesta 🙃'); vib(20); });
+document.querySelectorAll('.ios-incall [data-toggle]').forEach(b => b.addEventListener('click', () => { b.classList.toggle('on'); vib(15); }));
+$('#facetime').addEventListener('click', () => { toast('Hoy solo voz 💛'); vib(15); });
+$('#more').addEventListener('click', () => { toast('Más al rato te cuento 😉'); vib(15); });
+$('#keypad').addEventListener('click', () => { toast('Marca 1 si me quieres 😏'); vib(15); });
+$('#end').addEventListener('click', () => { toast('Todavía no cuelgues 🥺 escúchame'); vib([30, 60, 30]); });
 $('#accept').addEventListener('click', async () => {
   ac(); clearInterval(ringT); vib(0); $('#toast').classList.remove('show');
   avisar('📞 Contestó tu llamada falsa', 3, 'telephone_receiver');
   tone(880, .08, { vol: .1 });
   const s = $('#s-call'); s.classList.add('oncall');
-  const st = $('#call-status'); const t0 = Date.now();
+  const st = $('#call-label'); const t0 = Date.now(); st.textContent = '00:00';
   const timer = setInterval(() => {
     const sec = Math.floor((Date.now() - t0) / 1000);
     st.textContent = String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0');
@@ -612,7 +651,7 @@ $('#accept').addEventListener('click', async () => {
   }
   if (au && !au.ended) await Promise.race([new Promise(r => au.onended = r), sleep(180000)]);
   clearInterval(timer);
-  s.classList.add('ended'); st.textContent = 'Llamada finalizada';
+  s.classList.add('ended'); st.textContent = 'llamada finalizada';
   [0, .45, .9].forEach(w => tone(425, .25, { vol: .12, when: w }));
   await sleep(2400);
   startMusic(); go('s-heart');
@@ -783,10 +822,11 @@ $('#no-mic').addEventListener('click', () => {
 });
 $('#mic-btn').addEventListener('click', async () => {
   if (micOn) return;
-  ac();
+  ac(); audioMode('play-and-record');
   try {
     micStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
   } catch (e) {
+    audioMode('playback');
     $('#cake-sub').textContent = 'no hubo micrófono 😅 tócalas para apagarlas';
     $('#mic-btn').style.display = 'none'; $('#no-mic').style.display = 'none'; return;
   }
@@ -810,6 +850,7 @@ async function cakeDone() {
   if (cakeFinished) return; cakeFinished = true;
   avisar('🎂 Sopló las velas', 3, 'birthday');
   if (micStream) micStream.getTracks().forEach(t => t.stop());
+  audioMode('playback');
   $('#cake').style.setProperty('--wind', 0);
   $('#cake-glow').style.opacity = 0; $('#s-cake').classList.add('dark');
   $('#cake-ctrl').classList.add('hidden');
