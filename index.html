@@ -448,18 +448,21 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 const $ = s => document.querySelector(s);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const canVibrate = typeof navigator.vibrate === 'function';
-const haptic = (() => {
-  const l = document.createElement('label'), i = document.createElement('input');
-  i.type = 'checkbox'; i.setAttribute('switch', ''); l.appendChild(i); l.setAttribute('aria-hidden', 'true');
-  l.style.cssText = 'position:fixed;left:-99px;top:0;width:1px;height:1px;opacity:0;pointer-events:none';
-  document.body.appendChild(l); return l;
-})();
-// iPhone no tiene navigator.vibrate(): cada clic a un switch nativo da un toque háptico (iOS 18+)
+// iPhone no tiene navigator.vibrate(): hacer clic a un switch nativo da un toque háptico.
+// iOS solo lo permite dentro del toque de ella, así que el primer pulso va sin retraso.
+function haptic() {
+  try {
+    const l = document.createElement('label'), i = document.createElement('input');
+    i.type = 'checkbox'; i.setAttribute('switch', ''); l.appendChild(i);
+    l.setAttribute('aria-hidden', 'true'); l.style.display = 'none';
+    document.head.appendChild(l); l.click(); l.remove();
+  } catch (e) {}
+}
 const vib = p => {
   if (!p) { if (canVibrate) navigator.vibrate(0); return; }
   if (canVibrate) { try { navigator.vibrate(p); } catch (e) {} return; }
   let t = 0;
-  (Array.isArray(p) ? p : [p]).forEach((d, i) => { if (i % 2 === 0) setTimeout(() => haptic.click(), t); t += d; });
+  (Array.isArray(p) ? p : [p]).forEach((d, i) => { if (i % 2 === 0) { if (t === 0) haptic(); else setTimeout(haptic, t); } t += d; });
 };
 const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
