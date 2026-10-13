@@ -1,66 +1,110 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-AR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f2f2">
-<title>Para ti</title>
+<title>Para vos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <script>
 /* ============================================================
-   ✏️  EDITA SOLO ESTO
+   ✏️  EDITÁ SOLO ESTO
    ============================================================ */
 const CONFIG = {
-  ella: "Belen",                    // su nombre o como le dices
-  yo: "Jesús",                        // tu nombre (sale en la llamada)
-  contacto: "Jesús 💛",                // cómo te tiene guardado en su iPhone (así sale en la llamada falsa)
+  ella: "Belen",                      // su nombre o como le decís
+  yo: "Jesús",                        // tu nombre (va en la firma)
+  contacto: "Jesús 💛",               // cómo te tiene agendado en su iPhone (así sale en la llamada falsa)
   etiqueta: "celular",                // lo que sale arriba de tu nombre: "celular", "iPhone", "WhatsApp audio"...
   inicio: "2026-07-13T00:00:00",      // el día que empezaron (año-mes-díaThh:mm)
 
-  foto: "",                           // opcional: "yo.jpg" -> tu foto en la llamada
-  audioLlamada: "",                   // opcional: "nota.mp3" -> tu voz real al contestar
-  musica: "",                         // opcional: "cancion.mp3" -> su canción, suena después de la llamada
+  foto: "",                           // opcional: "fotos/yo.jpg" -> tu foto de fondo en la llamada (vertical)
+  audioLlamada: "",                   // opcional: "nota.mp3" -> tu voz de verdad al atender
+  musica: "",                         // opcional: "cancion.mp3" -> su canción, arranca después de la llamada
 
   // Final con llamada real
-  avisos: "regalo-fc561v43nqh3de",    // canal secreto de ntfy: suscríbete a este nombre en la app ntfy ("" = sin avisos)
-  whatsapp: "",                       // tu número con lada, solo dígitos (ej. 5215512345678) para el botón de respaldo
+  avisos: "regalo-fc561v43nqh3de",    // canal secreto de ntfy ("" = sin avisos)
+  whatsapp: "",                       // tu número con código de país, solo dígitos (ej. 5493871234567)
 
-  // Lo que "dices" en la llamada (subtítulos)
+  // Lo que "decís" en la llamada (subtítulos)
   mensajeLlamada: [
-    "¿Hola? ¿Me escuchas?",
-    "Perdón por el susto de hace rato 😅",
-    "Obvio que te hice algo. Pero esta vez no es para verlo…",
+    "¿Hola? ¿Me escuchás?",
+    "Perdón por el susto de recién 😅",
+    "¿En serio pensaste que no te iba a hacer nada?",
+    "Esta vez no es para mirar nomás…",
     "es para sentirlo.",
-    "Haz todo lo que te pida, ¿va?",
-    "Te quiero. Ahora cuelgo 💛"
+    "Hacé todo lo que te vaya pidiendo, ¿dale?",
+    "Te quiero. Ahora corto 💛"
   ],
 
-  // Cada recuerdo es una estrella (pon los suyos de verdad, 5 a 9 queda bien)
+  // ¿Cuánto me conocés? (correcta = número de la opción buena, empezando en 0)
+  quiz: [
+    { pregunta: "¿Qué es lo primero que hago cuando me despierto?",
+      opciones: ["Te escribo a vos", "Miro TikTok", "Sigo durmiendo"], correcta: 0,
+      si: "Obvio. Vos primero, siempre ☀️", no: "Mmm, no. Lo primero es escribirte a vos 😌" },
+    { pregunta: "¿Cuántas veces por día pienso en vos?",
+      opciones: ["Una", "Unas diez", "Perdí la cuenta"], correcta: 2,
+      si: "Exacto. Ya ni las cuento 🙈", no: "Nooo, muchas más. Perdí la cuenta hace rato" },
+    { pregunta: "¿Qué es lo que más extraño de vos?",
+      opciones: ["Tu voz", "Tu risa", "Todo, pucha"], correcta: 2,
+      si: "Todo. Hasta cuando te enojás 😅", no: "Eso también… pero la verdad es que extraño todo" },
+    { pregunta: "Si ahora mismo pudiera estar en un lugar, ¿dónde sería?",
+      opciones: ["En mi cama", "Al lado tuyo", "De viaje"], correcta: 1,
+      si: "Al lado tuyo. Sin dudarlo 💛", no: "Nop. Al lado tuyo, ¿dónde más?" }
+  ],
+
+  // Cada recuerdo es una estrella (5 a 9 queda lindo)
   recuerdos: [
-    { titulo: "El primer mensaje",        texto: "Todavía me acuerdo de lo que sentí cuando vi tu nombre en mi pantalla." },
-    { titulo: "Nuestra primera llamada",  texto: "Yo nervioso, tú preciosa. Colgamos y ya quería volver a escucharte." },
-    { titulo: "Tu risa",                  texto: "Ese sonido que haces cuando algo te da muchísima risa. Lo escucharía todo el día." },
-    { titulo: "El primer 'te quiero'",    texto: "Lo dijiste y el mundo se puso en silencio un segundo." },
-    { titulo: "Las noches en llamada",    texto: "Quedarnos dormidos sin colgar. Lo más cerca que he estado de tenerte al lado." },
-    { titulo: "Nuestro chiste",           texto: "(Aquí va ese chiste que solo nosotros entendemos 🤭)" },
-    { titulo: "Hoy",                      texto: "3 meses, muchos kilómetros, y te elegiría otra vez. Y otra. Y otra." }
+    { titulo: "El primer mensaje",      texto: "Todavía me acuerdo lo que sentí cuando vi tu nombre en la pantalla." },
+    { titulo: "La primera llamada",     texto: "Yo re nervioso, vos hermosa. Cortamos y ya quería escucharte de nuevo." },
+    { titulo: "Tu risa",                texto: "Esa risa que te agarra cuando algo te causa mucha gracia. La escucharía todo el día." },
+    { titulo: "El primer 'te quiero'",  texto: "Lo dijiste y por un segundo se me paró todo." },
+    { titulo: "Las noches en llamada",  texto: "Quedarnos dormidos sin cortar. Lo más cerca que estuve de tenerte al lado." },
+    { titulo: "Nuestro chiste",         texto: "(Acá va ese chiste que solo entendemos nosotros 🤭)" },
+    { titulo: "Hoy",                    texto: "3 meses, un montón de kilómetros, y te volvería a elegir. Una y otra vez." }
   ],
 
-  // Lo que hay debajo del raspa y gana (que sea algo REAL que le vas a dar)
+  // Polaroids: poné las fotos en la carpeta "fotos" (si la lista queda vacía, esta pantalla no aparece)
+  fotos: [
+    // { src: "fotos/1.jpg", texto: "La primera videollamada" },
+  ],
+
+  // El frasco: una razón por papelito
+  razones: [
+    "Porque me hacés reír hasta en mis peores días.",
+    "Porque con vos puedo ser yo, sin filtro.",
+    "Porque aunque estemos lejos, te siento cerca.",
+    "Porque te acordás de las cosas chiquitas que te cuento.",
+    "Por cómo me hablás cuando estás medio dormida.",
+    "Por tu manera de ver las cosas.",
+    "Porque me bancás, incluso cuando estoy insoportable.",
+    "Porque sí. Porque sos vos."
+  ],
+
+  // Términos y condiciones de este amor
+  contrato: [
+    "Las llamadas de buenas noches son obligatorias. Aunque estemos muertos de sueño.",
+    "Prohibido irse a dormir enojados. Se arregla antes, aunque sea por audio.",
+    "Cada vez que nos veamos, el primer abrazo dura mínimo 10 segundos.",
+    "Nadie corta primero. (Esta cláusula no tiene solución.)",
+    "La distancia no cuenta como excusa para dejar de mimarnos.",
+    "Este contrato se renueva solo, todos los meses, y no vence nunca."
+  ],
+
+  // Lo que hay abajo del raspa y gana (que sea algo REAL que le vas a cumplir)
   premio: {
     titulo: "VALE POR",
-    texto: "La próxima vez que nos veamos, yo planeo el día entero. Tú solo llega 🧳",
-    letra: "Válido solo para ti · No caduca"
+    texto: "La próxima vez que nos veamos, el día entero lo planeo yo. Vos solo vení 🧳",
+    letra: "Válido solo para vos · No vence"
   },
 
   carta: [
-    "No sé si te lo digo suficiente, así que aquí va por escrito:",
-    "Estos 3 meses han sido de lo más bonito que me ha pasado. Me haces reír, me das calma y me dan ganas de ser mejor.",
-    "Gracias por elegirme cada día, incluso los días en que no soy tan fácil.",
-    "Y si así se siente a los 3 meses… no me imagino lo que viene."
+    "No sé si te lo digo lo suficiente, así que te lo dejo por escrito:",
+    "Estos 3 meses fueron de lo más lindo que me pasó. Me hacés reír, me das paz y me dan ganas de ser mejor.",
+    "Gracias por elegirme todos los días, incluso esos días en que no soy tan fácil.",
+    "Y si esto se siente así a los 3 meses… no me imagino lo que viene."
   ],
   final: "Te quiero. Feliz 3 meses 💛"
 };
@@ -68,7 +112,7 @@ const CONFIG = {
 
 <style>
 :root{
-  --accent:#f5c66b; --accent-soft:#f3e7cf; --pistache:#e4eca5; --gold:#ffd58a; --ink:#0b0710;
+  --accent:#f5c66b; --accent-soft:#f3e7cf; --pistache:#e4eca5; --gold:#ffd58a;
   --glass:rgba(255,255,255,.08); --line:rgba(255,255,255,.16);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -79,13 +123,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   padding:max(24px,env(safe-area-inset-top)) 20px max(24px,env(safe-area-inset-bottom));text-align:center;
   opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s linear .9s;overflow:hidden}
 .scene.active{opacity:1;visibility:visible;transition:opacity .9s ease}
+.scene.active > .title:not(.real-line){animation:rise .9s .1s both}
+.scene.active > .sub{animation:rise .9s .3s both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .hidden{opacity:0!important;pointer-events:none!important;transform:translateY(12px)}
 .title{font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(26px,7vw,40px);line-height:1.15;letter-spacing:-.01em}
 .title em{font-style:italic;color:var(--pistache)}
 .sub{margin-top:10px;font-size:15px;color:rgba(255,255,255,.65);min-height:1.4em;transition:opacity .4s}
+.eyebrow{font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;min-height:1.2em}
 .next{margin-top:28px;padding:14px 26px;border-radius:999px;background:#fff;color:#1a1408;font-weight:600;font-size:15px;
   box-shadow:0 10px 40px rgba(245,198,107,.35);transition:opacity .9s,transform .9s}
 .next:active{transform:scale(.96)}
+.next:disabled{opacity:.3;box-shadow:none}
 
 /* ---------- 0 · la página "aburrida" ---------- */
 #s-fake{background:#f2f2f2;color:#333;font-family:Arial,Helvetica,sans-serif}
@@ -184,7 +233,20 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .beats{margin-top:16px;font-size:14px;color:rgba(255,255,255,.75);max-width:300px;margin-inline:auto;line-height:1.5}
 .beats b{color:var(--pistache);font-variant-numeric:tabular-nums}
 
-/* ---------- 4 · constelación ---------- */
+/* ---------- 4 · quiz ---------- */
+#s-quiz{background:radial-gradient(100% 70% at 50% 30%,#1d2414 0%,#0b0d07 60%,#030402 100%)}
+#quiz-body{width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;transition:opacity .35s,transform .35s}
+#quiz-body.out{opacity:0;transform:translateY(10px)}
+.quiz-opts{display:flex;flex-direction:column;gap:12px;width:100%;margin-top:26px}
+.quiz-opts:empty{margin:0}
+.opt{padding:16px 18px;border-radius:16px;background:var(--glass);border:1px solid var(--line)!important;font-size:16px;text-align:left;transition:background .3s,color .3s,opacity .3s,transform .2s}
+.opt:active{transform:scale(.98)}
+.opt.ok{background:var(--pistache);color:#1a1f08;border-color:var(--pistache)!important}
+.opt.bad{opacity:.4;animation:shake .4s}
+.quiz-opts.locked .opt{pointer-events:none}
+#quiz-fb{margin-top:18px;min-height:2.8em;line-height:1.4;max-width:320px}
+
+/* ---------- 5 · constelación ---------- */
 #s-stars{background:radial-gradient(120% 90% at 50% 100%,#1b1640 0%,#090718 55%,#020108 100%)}
 #sky{position:absolute;inset:0;width:100%;height:100%}
 .stars-head{position:absolute;top:max(36px,env(safe-area-inset-top));left:20px;right:20px;z-index:2}
@@ -203,18 +265,47 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 #outline path.fill{fill:rgba(245,198,107,0);stroke:none;transition:fill 2s}
 #outline path.fill.on{fill:rgba(245,198,107,.14)}
 #stars-next{position:absolute;bottom:max(36px,env(safe-area-inset-bottom));z-index:2}
-#memo{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:24px;background:rgba(3,2,10,.55);
+.overlay{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:24px;background:rgba(3,2,10,.55);
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s}
-#memo.open{opacity:1;pointer-events:auto}
+.overlay.open{opacity:1;pointer-events:auto}
 .memo-card{max-width:340px;padding:28px 24px 22px;border-radius:24px;background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.05));
   border:1px solid var(--line);transform:scale(.9);transition:transform .4s cubic-bezier(.2,.9,.3,1.3);text-align:center}
-#memo.open .memo-card{transform:scale(1)}
+.overlay.open .memo-card,.overlay.open .note-card{transform:scale(1) rotate(-2deg)}
+.overlay.open .memo-card{transform:scale(1)}
 .memo-card small{font-size:11px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase}
 .memo-card h3{font-family:Fraunces,serif;font-weight:500;font-size:26px;margin:8px 0 12px}
 .memo-card p{font-size:16px;line-height:1.6;color:rgba(255,255,255,.85)}
 .memo-card button{margin-top:22px;padding:10px 20px;border-radius:999px;border:1px solid var(--line)!important;font-size:14px}
 
-/* ---------- 5 · pastel ---------- */
+/* ---------- 6 · polaroids ---------- */
+#s-photos{background:radial-gradient(100% 70% at 50% 45%,#2a2214 0%,#110d07 60%,#050403 100%)}
+.stack{position:relative;width:min(290px,76vw);aspect-ratio:290/362;margin-top:30px}
+.pol{position:absolute;inset:0;background:#fbf7ee;border-radius:6px;padding:12px 12px 0;color:#2a1f0c;touch-action:none;
+  box-shadow:0 18px 40px rgba(0,0,0,.45);transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .45s}
+.pol.drag{transition:none}
+.pol img,.pol .ph{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:2px;background:#ddd;pointer-events:none}
+.pol .ph{display:grid;place-items:center;background:linear-gradient(135deg,#e9cf9f,#b8862f);font-size:40px}
+.pol p{font-family:Caveat,cursive;font-size:23px;line-height:1.1;padding:8px 4px;min-height:62px;display:grid;place-items:center}
+
+/* ---------- 7 · frasco ---------- */
+#s-jar{background:radial-gradient(100% 70% at 50% 55%,#1f2414 0%,#0c0d07 60%,#030402 100%)}
+.jar{position:relative;width:170px;height:232px;margin-top:34px}
+.jar.wiggle{animation:jarwig .5s}
+@keyframes jarwig{0%,100%{transform:rotate(0)}25%{transform:rotate(-7deg)}50%{transform:rotate(6deg)}75%{transform:rotate(-3deg)}}
+.jar-lid{position:absolute;left:26px;right:26px;top:0;height:26px;border-radius:8px;background:linear-gradient(#f5c66b,#b8862f);box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+.jar-neck{position:absolute;left:34px;right:34px;top:24px;height:16px;border:2px solid rgba(255,255,255,.35);border-top:0;border-bottom:0;background:rgba(255,255,255,.05)}
+.jar-body{position:absolute;left:0;right:0;top:38px;bottom:0;border-radius:34px 34px 42px 42px;border:2px solid rgba(255,255,255,.38);overflow:hidden;
+  background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.04) 30%,rgba(255,255,255,.02) 70%,rgba(255,255,255,.12))}
+.jar-body i{position:absolute;width:32px;height:21px;border-radius:4px;box-shadow:0 2px 4px rgba(0,0,0,.25);transition:transform .6s cubic-bezier(.5,0,.5,1),opacity .6s}
+.jar-body i.gone{opacity:0;transform:translateY(-190px)!important}
+.jar::after{content:"";position:absolute;left:18px;top:56px;width:10px;height:120px;border-radius:6px;background:rgba(255,255,255,.18)}
+.note-card{max-width:320px;padding:30px 26px 22px;border-radius:4px;background:#fbf7ee;color:#2a1f0c;box-shadow:0 20px 50px rgba(0,0,0,.5);
+  transform:scale(.85) rotate(-2deg);transition:transform .45s cubic-bezier(.2,.9,.3,1.3)}
+.note-card small{font-size:11px;letter-spacing:.25em;color:#a8761f;text-transform:uppercase}
+.note-card p{font-family:Caveat,cursive;font-size:30px;line-height:1.2;margin:12px 0 18px}
+.note-card button{padding:9px 18px;border-radius:999px;border:1px solid rgba(42,31,12,.25)!important;font-size:14px}
+
+/* ---------- 8 · pastel ---------- */
 #s-cake{background:radial-gradient(90% 60% at 50% 60%,#3a2116 0%,#140a07 65%,#050202 100%);transition:opacity .9s,visibility 0s linear .9s,background 1s}
 #s-cake.dark{background:radial-gradient(90% 60% at 50% 60%,#0c0a07 0%,#060504 70%,#000 100%)}
 .cake{position:relative;width:260px;height:250px;margin:30px 0 10px}
@@ -251,7 +342,26 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .meter i{display:block;height:100%;width:0;background:var(--gold)}
 .listening~.meter{opacity:1}
 
-/* ---------- 6 · raspa ---------- */
+/* ---------- 9 · contrato ---------- */
+#s-pact{background:radial-gradient(100% 70% at 50% 35%,#2a2214 0%,#110d07 60%,#050403 100%)}
+.pact{width:100%;max-width:340px;max-height:31vh;overflow-y:auto;margin-top:20px;padding:16px 18px 6px;border-radius:16px;background:var(--glass);
+  border:1px solid var(--line);text-align:left;transition:max-height .7s ease;touch-action:pan-y;-webkit-user-select:none}
+.pact.small{max-height:14vh}
+.pact ol{padding-left:20px;font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.85)}
+.pact li{margin-bottom:10px}
+.pact li::marker{color:var(--accent);font-weight:600}
+.pact-check{display:flex;align-items:center;gap:12px;margin-top:16px;width:100%;max-width:340px;font-size:15px;text-align:left;cursor:pointer}
+.pact-check input{flex:none;width:22px;height:22px;accent-color:#34c759}
+#sign-wrap{width:100%;max-width:340px;margin-top:8px;transition:opacity .6s,transform .6s}
+#sign{display:block;width:100%;height:120px;margin-top:8px;border-radius:14px;border:1.5px dashed rgba(243,231,207,.4);background:rgba(255,255,255,.04);touch-action:none}
+.sign-btns{display:flex;justify-content:space-between;align-items:center}
+.sign-btns .next{margin-top:14px}
+.stamp{position:absolute;left:50%;top:64%;padding:8px 18px;border:3px solid var(--pistache);border-radius:10px;color:var(--pistache);background:rgba(0,0,0,.45);
+  font-family:Fraunces,serif;font-size:30px;letter-spacing:.08em;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(2.4) rotate(-14deg);
+  transition:opacity .25s,transform .35s cubic-bezier(.3,1.6,.5,1)}
+.stamp.show{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-14deg)}
+
+/* ---------- 10 · raspa ---------- */
 #s-scratch{background:radial-gradient(100% 70% at 50% 40%,#241d10 0%,#0d0a06 65%,#030201 100%)}
 .ticket{position:relative;width:min(320px,88vw);aspect-ratio:16/10;margin-top:30px;border-radius:20px;overflow:hidden;
   background:linear-gradient(145deg,#fffaf0,#f3e7cf);color:#2a1f0c;box-shadow:0 20px 60px rgba(0,0,0,.5);touch-action:none}
@@ -263,7 +373,25 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .ticket-in em{margin-top:8px;font-family:Caveat,cursive;font-size:19px;font-style:normal;color:#a8761f}
 #scratch{position:absolute;inset:0;width:100%;height:100%;transition:opacity 1s;cursor:grab;touch-action:none}
 
-/* ---------- 7 · carta ---------- */
+/* ---------- 11 · sobre ---------- */
+#s-env{background:radial-gradient(100% 70% at 50% 55%,#2a2214 0%,#110d07 60%,#050403 100%)}
+.env{position:relative;width:min(310px,84vw);aspect-ratio:3/2;margin-top:46px;perspective:900px;transition:transform 1.2s ease,opacity 1.2s ease}
+.env-back{position:absolute;inset:0;border-radius:8px;background:#c9a764}
+.env-paper{position:absolute;left:5%;right:5%;top:6%;bottom:6%;z-index:1;border-radius:4px;background:#fbf7ee;color:#2a1f0c;
+  display:flex;justify-content:center;padding-top:12%;font-family:Caveat,cursive;font-size:24px;transition:transform 1.1s cubic-bezier(.3,.8,.3,1)}
+.env-front{position:absolute;inset:0;z-index:2;border-radius:8px;background:linear-gradient(160deg,#ecd29b,#d6b473);clip-path:polygon(0 0,50% 54%,100% 0,100% 100%,0 100%)}
+.env-flap{position:absolute;left:0;right:0;top:0;height:60%;z-index:3;background:linear-gradient(#f3dcaa,#ddbd7c);clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:50% 0;transition:transform .8s ease-in-out}
+.env.open .env-flap{transform:rotateX(180deg);z-index:0}
+.env.out .env-paper{transform:translateY(-58%)}
+.env.gone{transform:scale(1.5) translateY(-8%);opacity:0}
+.seal{position:absolute;left:50%;top:54%;z-index:4;width:70px;height:70px;margin:-35px 0 0 -35px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#f7d993,#b8862f 55%,#7a5214);box-shadow:0 4px 14px rgba(0,0,0,.45),inset 0 0 0 5px rgba(0,0,0,.12);
+  font-family:Fraunces,serif;font-style:italic;font-size:19px;color:#4a3210;animation:sealpulse 2s ease-in-out infinite;transition:transform .45s,opacity .45s}
+@keyframes sealpulse{0%,100%{box-shadow:0 4px 14px rgba(0,0,0,.45),0 0 0 0 rgba(245,198,107,.55)}50%{box-shadow:0 4px 14px rgba(0,0,0,.45),0 0 0 16px rgba(245,198,107,0)}}
+.env.broken .seal{transform:scale(1.3) rotate(30deg);opacity:0;animation:none}
+
+/* ---------- 12 · carta ---------- */
 #s-final{background:radial-gradient(110% 80% at 50% 30%,#2a2214 0%,#14110b 60%,#050403 100%);justify-content:flex-start;overflow-y:auto}
 .floaters{position:fixed;inset:0;pointer-events:none;overflow:hidden}
 .floaters span{position:absolute;bottom:-40px;color:var(--accent);opacity:0;animation:floatup linear infinite}
@@ -280,7 +408,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .again{display:block;margin:34px auto 0;font-size:13px;color:rgba(255,255,255,.45);opacity:0;transition:opacity 1.5s}
 .again:not(.show){pointer-events:none}
 
-/* ---------- 8 · llamada real ---------- */
+/* ---------- 13 · llamada real ---------- */
 #s-real{background:radial-gradient(90% 60% at 50% 55%,#0d2416 0%,#050c08 60%,#000 100%)}
 .real-line{opacity:0;transform:translateY(8px);transition:opacity 1.4s,transform 1.4s}
 .real-line.show{opacity:1;transform:none}
@@ -296,7 +424,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 #real-wa{display:inline-block;text-decoration:none}
 
 #fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
-@media (prefers-reduced-motion:reduce){.flame,.mstar i,#accept span{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.flame,.mstar i,#accept span,.seal{animation:none!important}}
 </style>
 </head>
 <body>
@@ -305,18 +433,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 <section id="s-fake" class="scene active">
   <div class="fake-box">
     <p>Hola, <span data-ella></span>.</p>
-    <p>Este mes no me dio tiempo de hacerte una página.</p>
-    <p>Perdón. 😕</p>
+    <p>Este mes no llegué a hacerte una página.</p>
+    <p>Perdón 😕</p>
     <p class="fake-small">Feliz 3 meses igual.</p>
-    <button id="fake-ok" class="fake-btn">Está bien…</button>
+    <button id="fake-ok" class="fake-btn">Bueno…</button>
   </div>
 </section>
 
 <!-- 1 · mentira -->
 <section id="s-lie" class="scene">
   <h1 id="lie-1"></h1>
-  <p id="lie-2">Esta vez no te hice algo para ver.<br>Te hice algo para <em>sentir</em>.</p>
-  <p id="lie-3">🔊 sube el volumen</p>
+  <p id="lie-2">Esta vez no te hice algo para mirar.<br>Te hice algo para <em>sentir</em>.</p>
+  <p id="lie-3">🔊 subí el volumen</p>
 </section>
 
 <!-- 2 · llamada (igual a la del iPhone) -->
@@ -350,12 +478,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 <!-- 3 · latido -->
 <section id="s-heart" class="scene">
-  <h2 class="title" id="heart-title">Pon tu dedo en el corazón</h2>
+  <h2 class="title" id="heart-title">Poné tu dedo en el corazón</h2>
   <p class="sub" id="heart-sub">y no lo sueltes</p>
   <div class="pad-wrap">
     <svg class="ring" viewBox="0 0 220 220"><circle class="ring-bg" cx="110" cy="110" r="100"/><circle class="ring-fg" id="ring-fg" cx="110" cy="110" r="100"/></svg>
-    <button class="pad" id="pad" aria-label="Mantén presionado el corazón">
-      <svg class="bigheart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.780-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    <button class="pad" id="pad" aria-label="Mantené apretado el corazón">
+      <svg class="bigheart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
     </button>
   </div>
   <div class="counter hidden" id="counter">
@@ -366,27 +494,57 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
       <div><b id="c-m">0</b><span>min</span></div>
       <div><b id="c-s">0</b><span>seg</span></div>
     </div>
-    <p class="beats">≈ <b id="c-b">0</b> latidos de mi corazón desde que empezamos. Y todos llevan tu nombre.</p>
+    <p class="beats">≈ <b id="c-b">0</b> latidos desde que empezamos. Y todos tienen tu nombre.</p>
   </div>
-  <button class="next hidden" id="heart-next">Sigue →</button>
+  <button class="next hidden" id="heart-next">Seguí →</button>
 </section>
 
-<!-- 4 · constelación -->
+<!-- 4 · quiz -->
+<section id="s-quiz" class="scene">
+  <div id="quiz-body">
+    <p class="eyebrow" id="quiz-n"></p>
+    <h2 class="title" id="quiz-q">¿Cuánto me <em>conocés</em>?</h2>
+    <div class="quiz-opts" id="quiz-opts"></div>
+    <p class="sub" id="quiz-fb">a ver, a ver… 🤔</p>
+  </div>
+  <button class="next" id="quiz-next">Arrancar</button>
+</section>
+
+<!-- 5 · constelación -->
 <section id="s-stars" class="scene">
   <canvas id="sky"></canvas>
   <div class="stars-head">
-    <h2 class="title" id="stars-title">Cada recuerdo contigo es una <em>estrella</em></h2>
-    <p class="sub" id="stars-sub">tócalas todas ✨</p>
+    <h2 class="title" id="stars-title">Cada recuerdo con vos es una <em>estrella</em></h2>
+    <p class="sub" id="stars-sub">tocalas todas ✨</p>
   </div>
   <div id="constellation"><svg id="outline"></svg></div>
-  <button class="next hidden" id="stars-next">Sigue →</button>
+  <button class="next hidden" id="stars-next">Seguí →</button>
 </section>
-<div id="memo"><div class="memo-card"><small id="memo-n"></small><h3 id="memo-t"></h3><p id="memo-p"></p><button id="memo-close">✨ guardar</button></div></div>
+<div id="memo" class="overlay"><div class="memo-card"><small id="memo-n"></small><h3 id="memo-t"></h3><p id="memo-p"></p><button id="memo-close">✨ guardar</button></div></div>
 
-<!-- 5 · pastel -->
+<!-- 6 · polaroids -->
+<section id="s-photos" class="scene">
+  <h2 class="title" id="ph-title">Nuestros 3 meses en <em>fotos</em></h2>
+  <p class="sub" id="ph-sub">deslizalas para pasar 👉</p>
+  <div class="stack" id="stack"></div>
+  <button class="next hidden" id="ph-next">Seguí →</button>
+</section>
+
+<!-- 7 · frasco de razones -->
+<section id="s-jar" class="scene">
+  <h2 class="title" id="jar-title">Razones por las que te <em>quiero</em></h2>
+  <p class="sub" id="jar-sub">tocá el frasco</p>
+  <button class="jar" id="jar" aria-label="Sacar una razón del frasco">
+    <div class="jar-lid"></div><div class="jar-neck"></div><div class="jar-body" id="jar-body"></div>
+  </button>
+  <button class="next hidden" id="jar-next">Seguí →</button>
+</section>
+<div id="note" class="overlay"><div class="note-card"><small id="note-n"></small><p id="note-p"></p><button id="note-close">guardar 💛</button></div></div>
+
+<!-- 8 · pastel -->
 <section id="s-cake" class="scene">
-  <h2 class="title" id="cake-title">Pide un deseo 🤫</h2>
-  <p class="sub" id="cake-sub">y sopla las velas. De verdad: sopla al teléfono.</p>
+  <h2 class="title" id="cake-title">Pedí un deseo 🤫</h2>
+  <p class="sub" id="cake-sub">y soplá las velas. En serio: soplale al celu.</p>
   <div class="cake" id="cake">
     <div class="cake-glow" id="cake-glow"></div>
     <div class="candles">
@@ -399,17 +557,33 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
     <div class="plate"></div>
   </div>
   <div class="cake-ctrl" id="cake-ctrl">
-    <button class="mic-btn" id="mic-btn">🎤 Activar micrófono para soplar</button>
+    <button class="mic-btn" id="mic-btn">🎤 Activar el micrófono para soplar</button>
     <div class="meter"><i id="meter-i"></i></div>
     <button class="link" id="no-mic">no puedo usar el micrófono → las apago tocándolas</button>
   </div>
-  <button class="next hidden" id="cake-next">Sigue →</button>
+  <button class="next hidden" id="cake-next">Seguí →</button>
 </section>
 
-<!-- 6 · raspa -->
+<!-- 9 · contrato -->
+<section id="s-pact" class="scene">
+  <h2 class="title">Términos y condiciones de este <em>amor</em></h2>
+  <div class="pact" id="pact"><ol id="pact-list"></ol></div>
+  <label class="pact-check" id="pact-check"><input type="checkbox" switch id="pact-ok"><span>Leí y acepto (aunque no leí nada 🙈)</span></label>
+  <div class="hidden" id="sign-wrap">
+    <canvas id="sign"></canvas>
+    <div class="sign-btns">
+      <button class="link" id="sign-clear">borrar</button>
+      <button class="next" id="sign-ok" disabled>Firmar ✍️</button>
+    </div>
+  </div>
+  <div class="stamp" id="stamp">FIRMADO</div>
+  <button class="next hidden" id="pact-next">Seguí →</button>
+</section>
+
+<!-- 10 · raspa -->
 <section id="s-scratch" class="scene">
-  <h2 class="title">Último regalo.<br><em>Este sí es de verdad.</em></h2>
-  <p class="sub" id="scratch-sub">ráspalo con el dedo 👇</p>
+  <h2 class="title">Un regalo<br><em>de verdad.</em></h2>
+  <p class="sub" id="scratch-sub">raspalo con el dedo 👇</p>
   <div class="ticket" id="ticket">
     <div class="ticket-in">
       <small id="p-t"></small>
@@ -422,7 +596,20 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   <button class="next hidden" id="scratch-next">Una última cosa →</button>
 </section>
 
-<!-- 7 · carta -->
+<!-- 11 · sobre -->
+<section id="s-env" class="scene">
+  <h2 class="title">Esto lo escribí <em>yo</em>.</h2>
+  <p class="sub" id="env-sub">tocá el sello para abrirlo 💌</p>
+  <div class="env" id="env">
+    <div class="env-back"></div>
+    <div class="env-paper"><span>Para <span data-ella></span> 💛</span></div>
+    <div class="env-front"></div>
+    <div class="env-flap"></div>
+    <button class="seal" id="seal" aria-label="Romper el sello"><span id="seal-txt"></span></button>
+  </div>
+</section>
+
+<!-- 12 · carta -->
 <section id="s-final" class="scene">
   <div class="floaters" id="floaters"></div>
   <div class="letter" id="letter">
@@ -430,15 +617,15 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   </div>
 </section>
 
-<!-- 8 · llamada real -->
+<!-- 13 · llamada real -->
 <section id="s-real" class="scene">
   <p class="real-line" id="real-1">No cierres esto.</p>
-  <p class="real-line" id="real-2">¿Te acuerdas de la llamada del principio?</p>
+  <p class="real-line" id="real-2">¿Te acordás de la llamada del principio?</p>
   <h2 class="title real-line" id="real-3">Esta vez es <em>de verdad</em>.</h2>
   <div class="real-phone real-line" id="real-phone"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div>
-  <p class="sub real-line" id="real-4">contesta mi llamada de WhatsApp 📲</p>
-  <a class="next hidden" id="real-wa" target="_blank" rel="noopener">¿No te ha llamado? Avísale 💌</a>
-  <button class="again" id="real-again">↺ vivirlo otra vez</button>
+  <p class="sub real-line" id="real-4">atendé mi llamada de WhatsApp 📲</p>
+  <a class="next hidden" id="real-wa" target="_blank" rel="noopener">¿No te llamó? Avisale 💌</a>
+  <button class="again" id="real-again">↺ vivirlo de nuevo</button>
 </section>
 
 <canvas id="fx"></canvas>
@@ -471,10 +658,16 @@ document.querySelectorAll('[data-ella]').forEach(e => e.textContent = CONFIG.ell
 /* ---------- avisos a tu celular (ntfy) ---------- */
 const QS = new URLSearchParams(location.search);
 const sinAvisos = QS.has('escena') && !QS.has('avisos');   // probando escenas sueltas no te llegan avisos
+const NTFY = () => `https://ntfy.sh/${encodeURIComponent(CONFIG.avisos)}`;
 function avisar(msg, prioridad = 3, tags = 'heart') {
   if (!CONFIG.avisos || sinAvisos) return;
   const q = new URLSearchParams({ title: 'Regalo 3 meses', priority: prioridad, tags });
-  fetch(`https://ntfy.sh/${encodeURIComponent(CONFIG.avisos)}?${q}`, { method: 'POST', body: msg, mode: 'no-cors', keepalive: true }).catch(() => {});
+  fetch(`${NTFY()}?${q}`, { method: 'POST', body: msg, mode: 'no-cors', keepalive: true }).catch(() => {});
+}
+function avisarImagen(blob, msg) {
+  if (!CONFIG.avisos || sinAvisos || !blob) return;
+  const q = new URLSearchParams({ title: 'Regalo 3 meses', message: msg, filename: 'firma.png', tags: 'writing_hand', priority: 4 });
+  fetch(`${NTFY()}?${q}`, { method: 'POST', body: new Blob([blob], { type: 'text/plain' }), mode: 'no-cors' }).catch(() => {});
 }
 
 /* ---------- audio sintetizado (no necesita archivos) ---------- */
@@ -507,6 +700,7 @@ function noise(dur = .5, vol = .15, when = 0, freq = 1200) {
 }
 const thump = () => { tone(72, .2, { vol: .9, slide: 40 }); tone(62, .18, { vol: .6, slide: 35, when: .22 }); };
 const chime = (base = 1046) => [1, 1.25, 1.5, 2].forEach((m, i) => tone(base * m, .9, { vol: .08, when: i * .09 }));
+const buzz = () => { tone(220, .25, { type: 'triangle', vol: .12 }); tone(175, .3, { type: 'triangle', vol: .12, when: .15 }); };
 
 async function type(el, text, speed = 45, blip = false) {
   el.textContent = '';
@@ -553,8 +747,9 @@ function fxLoop() {
 /* ---------- escenas ---------- */
 let current = $('.scene.active');
 const enter = {};
-const THEME = { 's-fake': '#f2f2f2', 's-lie': '#000000', 's-call': '#4a4a4f', 's-heart': '#0d0a06', 's-stars': '#05040f',
-  's-cake': '#0d0806', 's-scratch': '#0d0a06', 's-final': '#0d0a06', 's-real': '#04100a' };
+const THEME = { 's-fake': '#f2f2f2', 's-lie': '#000000', 's-call': '#4a4a4f', 's-heart': '#0d0a06', 's-quiz': '#0b0d07',
+  's-stars': '#05040f', 's-photos': '#0d0a06', 's-jar': '#0c0d07', 's-cake': '#0d0806', 's-pact': '#0d0a06',
+  's-scratch': '#0d0a06', 's-env': '#0d0a06', 's-final': '#0d0a06', 's-real': '#04100a' };
 function setTheme(id) {
   const c = id === 's-call' && CONFIG.foto ? '#000000' : (THEME[id] || '#000000');
   document.querySelector('meta[name=theme-color]').content = c;
@@ -576,7 +771,7 @@ function startMusic() {
   const els = [...document.querySelectorAll('#s-fake p'), $('#fake-ok')];
   for (const e of els) { await sleep(700); e.classList.add('show'); }
 })();
-avisar('👀 Abrió la página. Empieza el show.', 3, 'eyes');
+avisar('👀 Abrió la página. Arranca el show.', 3, 'eyes');
 $('#fake-ok').addEventListener('click', async () => {
   ac(); avisar('😏 Cayó en el engaño de la página aburrida', 2, 'smirk');
   const s = $('#s-fake');
@@ -614,7 +809,7 @@ enter['s-call'] = () => {
   if (CONFIG.foto) { const bg = $('#call-bg'); bg.style.backgroundImage = `url("${CONFIG.foto}")`; bg.classList.add('photo'); }
   ring(); ringT = setInterval(ring, 2800);
 };
-const declineMsgs = ['Ese botón no funciona hoy 😌', 'Nop. Inténtalo con el verde', 'Ya, contesta 🥺'];
+const declineMsgs = ['Ese botón hoy no anda 😌', 'Nop. Probá con el verde', 'Dale, atendé 🥺'];
 let declines = 0;
 $('#decline').addEventListener('click', () => {
   const d = $('#decline');
@@ -622,19 +817,19 @@ $('#decline').addEventListener('click', () => {
   d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake'); vib(80);
   if (++declines === 3) {
     setTimeout(() => { d.classList.add('gone'); $('#row-main').classList.add('solo'); }, 450);
-    avisar('😂 Intentó rechazar tu llamada 3 veces', 2, 'joy');
+    avisar('😂 Intentó rechazarte la llamada 3 veces', 2, 'joy');
   }
 });
-$('#remind').addEventListener('click', () => { toast('¿Recordarte? Hoy no se te olvida nada 😌'); vib(20); });
-$('#message').addEventListener('click', () => { toast('Nada de mensajes. Contesta 🙃'); vib(20); });
+$('#remind').addEventListener('click', () => { toast('¿Recordarte? Hoy no te olvidás de nada 😌'); vib(20); });
+$('#message').addEventListener('click', () => { toast('Nada de mensajes. Atendé 🙃'); vib(20); });
 document.querySelectorAll('.ios-incall [data-toggle]').forEach(b => b.addEventListener('click', () => { b.classList.toggle('on'); vib(15); }));
 $('#facetime').addEventListener('click', () => { toast('Hoy solo voz 💛'); vib(15); });
-$('#more').addEventListener('click', () => { toast('Más al rato te cuento 😉'); vib(15); });
-$('#keypad').addEventListener('click', () => { toast('Marca 1 si me quieres 😏'); vib(15); });
-$('#end').addEventListener('click', () => { toast('Todavía no cuelgues 🥺 escúchame'); vib([30, 60, 30]); });
+$('#more').addEventListener('click', () => { toast('Después te cuento 😉'); vib(15); });
+$('#keypad').addEventListener('click', () => { toast('Marcá 1 si me querés 😏'); vib(15); });
+$('#end').addEventListener('click', () => { toast('Todavía no cortes 🥺 escuchame'); vib([30, 60, 30]); });
 $('#accept').addEventListener('click', async () => {
   ac(); clearInterval(ringT); vib(0); $('#toast').classList.remove('show');
-  avisar('📞 Contestó tu llamada falsa', 3, 'telephone_receiver');
+  avisar('📞 Atendió tu llamada falsa', 3, 'telephone_receiver');
   tone(880, .08, { vol: .1 });
   const s = $('#s-call'); s.classList.add('oncall');
   const st = $('#call-label'); const t0 = Date.now(); st.textContent = '00:00';
@@ -684,7 +879,7 @@ function release() {
   if (!holding || heartDone) return;
   holding = false; clearInterval(beatT); cancelAnimationFrame(raf);
   prog = 0; ringFg.classList.add('reset'); ringFg.style.strokeDashoffset = CIRC;
-  $('#heart-sub').textContent = '¡no lo sueltes! 🙈 otra vez';
+  $('#heart-sub').textContent = '¡Ey, no lo sueltes! 🙈 De nuevo';
 }
 ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => pad.addEventListener(ev, release));
 async function heartComplete() {
@@ -692,7 +887,7 @@ async function heartComplete() {
   vib([200, 100, 400]); chime(784); avisar('💓 Sintió el latido', 3, 'heartbeat');
   $('#s-heart').classList.add('done');
   $('#heart-title').innerHTML = '¿Lo <em>sentiste</em>?';
-  $('#heart-sub').textContent = 'Así late el mío cuando pienso en ti.';
+  $('#heart-sub').textContent = 'Así me late cuando pienso en vos.';
   await sleep(2600);
   $('#counter').classList.remove('hidden'); tickCounter(); setInterval(tickCounter, 1000);
   await sleep(2600); $('#heart-next').classList.remove('hidden');
@@ -703,11 +898,52 @@ function tickCounter() {
   $('#c-h').textContent = Math.floor(s % 86400 / 3600);
   $('#c-m').textContent = Math.floor(s % 3600 / 60);
   $('#c-s').textContent = s % 60;
-  $('#c-b').textContent = Math.floor(s * 75 / 60).toLocaleString('es-MX');
+  $('#c-b').textContent = Math.floor(s * 75 / 60).toLocaleString('es-AR');
 }
-$('#heart-next').addEventListener('click', () => go('s-stars'));
+$('#heart-next').addEventListener('click', () => go('s-quiz'));
 
-/* 4 · constelación */
+/* 4 · quiz: ¿cuánto me conocés? */
+let qi = -1, qScore = 0;
+$('#quiz-next').addEventListener('click', () => {
+  if (qi >= CONFIG.quiz.length) return go('s-stars');
+  ac(); vib(15); $('#quiz-next').classList.add('hidden'); qi = 0; showQ();
+});
+async function showQ() {
+  const body = $('#quiz-body'); body.classList.add('out'); await sleep(350);
+  if (qi >= CONFIG.quiz.length) return quizEnd();
+  const q = CONFIG.quiz[qi], box = $('#quiz-opts');
+  $('#quiz-n').textContent = `pregunta ${qi + 1} de ${CONFIG.quiz.length}`;
+  $('#quiz-q').textContent = q.pregunta; $('#quiz-fb').textContent = '';
+  box.innerHTML = ''; box.classList.remove('locked');
+  q.opciones.forEach((o, i) => {
+    const b = document.createElement('button'); b.className = 'opt'; b.textContent = o;
+    b.addEventListener('click', () => answer(i, b)); box.appendChild(b);
+  });
+  body.classList.remove('out');
+}
+async function answer(i, b) {
+  const q = CONFIG.quiz[qi], box = $('#quiz-opts'), ok = i === q.correcta;
+  box.classList.add('locked'); ac();
+  if (ok) { qScore++; b.classList.add('ok'); chime(988); vib([30, 40, 30]); }
+  else { b.classList.add('bad'); box.children[q.correcta].classList.add('ok'); buzz(); vib(120); }
+  $('#quiz-fb').textContent = ok ? q.si : q.no;
+  await sleep(2400); qi++; showQ();
+}
+function quizEnd() {
+  const n = CONFIG.quiz.length;
+  $('#quiz-n').textContent = 'resultado';
+  $('#quiz-q').innerHTML = `Acertaste <em>${qScore} de ${n}</em>`;
+  $('#quiz-opts').innerHTML = '';
+  $('#quiz-fb').textContent = qScore === n ? 'Me conocés re bien. Me asusta un poco 😳💛'
+    : qScore >= n / 2 ? 'Nada mal… igual tenemos toda la vida para que me conozcas más 😏'
+    : '¿¿Qué?? Bueno, tenemos toda la vida para practicar 😂';
+  $('#quiz-body').classList.remove('out');
+  if (qScore === n) { confetti(140); chime(784); }
+  avisar(`🧠 Quiz: acertó ${qScore} de ${n}`, 3, 'brain');
+  const nb = $('#quiz-next'); nb.textContent = 'Seguí →'; nb.classList.remove('hidden');
+}
+
+/* 5 · constelación */
 const sky = $('#sky'), sctx = sky.getContext('2d');
 let skyStars = [], skyOn = false, shoot = null;
 function sizeSky() {
@@ -769,7 +1005,7 @@ function buildStars() {
     d.style.left = p.x + 'px'; d.style.top = p.y + 'px'; d._slot = i;
     box.appendChild(d); dustEls.push(d);
   });
-  $('#stars-sub').textContent = `tócalas todas ✨  0/${N}`;
+  $('#stars-sub').textContent = `tocalas todas ✨  0/${N}`;
 }
 let openIdx = -1;
 function openMemo(i) {
@@ -783,11 +1019,11 @@ $('#memo-close').addEventListener('click', () => {
   if (openIdx < 0 || seen.has(openIdx)) return;
   seen.add(openIdx); memEls[openIdx].classList.add('seen');
   const N = CONFIG.recuerdos.length;
-  $('#stars-sub').textContent = `tócalas todas ✨  ${seen.size}/${N}`;
+  $('#stars-sub').textContent = `tocalas todas ✨  ${seen.size}/${N}`;
   if (seen.size === N) setTimeout(formHeart, 700);
 });
 async function formHeart() {
-  $('#stars-sub').textContent = 'mira…'; avisar('✨ Abrió todos los recuerdos y formó la constelación', 3, 'sparkles');
+  $('#stars-sub').textContent = 'mirá…'; avisar('✨ Abrió todos los recuerdos y armó la constelación', 3, 'sparkles');
   [...memEls, ...dustEls].forEach(e => { const p = slots[e._slot]; e.style.left = p.x + 'px'; e.style.top = p.y + 'px'; });
   [523, 659, 784, 1046, 1318].forEach((f, i) => tone(f, 1.4, { vol: .07, when: i * .32 }));
   await sleep(2000);
@@ -804,12 +1040,106 @@ async function formHeart() {
   await sleep(2600);
   svg.querySelector('.fill').classList.add('on'); vib([60, 60, 200]);
   $('#stars-title').innerHTML = 'Y juntos forman <em>esto</em>.';
-  $('#stars-sub').textContent = 'Eres mi constelación favorita.';
+  $('#stars-sub').textContent = 'Sos mi constelación favorita.';
   await sleep(1800); $('#stars-next').classList.remove('hidden');
 }
-$('#stars-next').addEventListener('click', () => go('s-cake'));
+// Sin fotos cargadas la pantalla de polaroids se saltea (al probar con ?escena= muestra fotos de ejemplo)
+const FOTOS = CONFIG.fotos.length ? CONFIG.fotos
+  : QS.has('escena') ? [{ texto: 'Acá va una foto de ustedes' }, { texto: 'Y acá otra' }, { texto: 'Y otra más 💛' }] : [];
+$('#stars-next').addEventListener('click', () => go(FOTOS.length ? 's-photos' : 's-jar'));
 
-/* 5 · pastel */
+/* 6 · polaroids */
+let phLeft = 0;
+enter['s-photos'] = () => {
+  const st = $('#stack'); if (st.children.length) return;
+  phLeft = FOTOS.length;
+  [...FOTOS].reverse().forEach(f => {
+    const c = document.createElement('div'); c.className = 'pol';
+    c._rot = (Math.random() * 10 - 5).toFixed(1); c.style.transform = `rotate(${c._rot}deg)`;
+    if (f.src) { const img = document.createElement('img'); img.src = f.src; img.alt = ''; img.draggable = false; c.appendChild(img); }
+    else { const ph = document.createElement('div'); ph.className = 'ph'; ph.textContent = '📷'; c.appendChild(ph); }
+    const p = document.createElement('p'); p.textContent = f.texto || ''; c.appendChild(p);
+    st.appendChild(c); dragCard(c);
+  });
+};
+function dragCard(c) {
+  let sx = 0, sy = 0, dx = 0, dy = 0, on = false;
+  c.addEventListener('pointerdown', e => {
+    if (c !== $('#stack').lastElementChild) return;
+    on = true; sx = e.clientX; sy = e.clientY; dx = dy = 0; c.classList.add('drag'); ac();
+    try { c.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  c.addEventListener('pointermove', e => {
+    if (!on) return; dx = e.clientX - sx; dy = e.clientY - sy;
+    c.style.transform = `translate(${dx}px,${dy}px) rotate(${+c._rot + dx / 14}deg)`;
+  });
+  const end = () => {
+    if (!on) return; on = false; c.classList.remove('drag');
+    const tap = Math.abs(dx) < 6 && Math.abs(dy) < 6;
+    if (tap || Math.abs(dx) > 80) throwCard(c, dx || 1);
+    else c.style.transform = `rotate(${c._rot}deg)`;
+  };
+  c.addEventListener('pointerup', end); c.addEventListener('pointercancel', end);
+}
+function throwCard(c, dx) {
+  const dir = dx > 0 ? 1 : -1;
+  c.style.transform = `translate(${dir * innerWidth}px,-40px) rotate(${dir * 30}deg)`; c.style.opacity = 0;
+  noise(.18, .06, 0, 1800); vib(15);
+  setTimeout(() => c.remove(), 450);
+  if (--phLeft === 0) photosDone();
+}
+async function photosDone() {
+  avisar('📸 Vio todas las fotos', 3, 'camera');
+  await sleep(500);
+  $('#ph-title').innerHTML = 'Y todas las que nos faltan <em>sacar juntos</em> 📸';
+  $('#ph-sub').textContent = 'Que son un montón.';
+  chime(880); await sleep(1400); $('#ph-next').classList.remove('hidden');
+}
+$('#ph-next').addEventListener('click', () => go('s-jar'));
+
+/* 7 · frasco de razones */
+let jarRead = 0, jarBusy = false;
+enter['s-jar'] = () => {
+  const b = $('#jar-body'); if (b.children.length) return;
+  const cols = ['#f5c66b', '#e4eca5', '#f3e7cf'];
+  CONFIG.razones.forEach((_, i) => {
+    const n = document.createElement('i'); n.style.background = cols[i % 3];
+    n.style.left = (12 + Math.random() * 110) + 'px';
+    n.style.bottom = (10 + Math.floor(i / 4) * 24 + Math.random() * 10) + 'px';
+    n.style.transform = `rotate(${(Math.random() * 70 - 35).toFixed(0)}deg)`;
+    b.appendChild(n);
+  });
+  $('#jar-sub').textContent = `tocá el frasco  0/${CONFIG.razones.length}`;
+};
+$('#jar').addEventListener('click', () => {
+  if (jarBusy || jarRead >= CONFIG.razones.length) return;
+  jarBusy = true; ac();
+  const j = $('#jar'); j.classList.remove('wiggle'); void j.offsetWidth; j.classList.add('wiggle');
+  vib(25); noise(.3, .06, 0, 2600);
+  const inside = [...$('#jar-body').children].filter(n => !n.classList.contains('gone'));
+  if (inside.length) inside[inside.length - 1].classList.add('gone');
+  setTimeout(() => {
+    $('#note-n').textContent = `razón ${jarRead + 1} de ${CONFIG.razones.length}`;
+    $('#note-p').textContent = CONFIG.razones[jarRead];
+    $('#note').classList.add('open'); chime(880 + jarRead * 40);
+  }, 500);
+});
+$('#note-close').addEventListener('click', () => {
+  $('#note').classList.remove('open'); jarRead++; jarBusy = false; vib(10);
+  const N = CONFIG.razones.length;
+  $('#jar-sub').textContent = `tocá el frasco  ${jarRead}/${N}`;
+  if (jarRead === N) jarDone();
+});
+async function jarDone() {
+  avisar('🫙 Leyó todas las razones del frasco', 3, 'heart');
+  await sleep(700);
+  $('#jar-title').innerHTML = 'Y el frasco sigue <em>lleno</em>.';
+  $('#jar-sub').textContent = 'Razones me sobran. Estas son solo algunas.';
+  await sleep(1500); $('#jar-next').classList.remove('hidden');
+}
+$('#jar-next').addEventListener('click', () => go('s-cake'));
+
+/* 8 · pastel */
 const candles = [...document.querySelectorAll('.candle')];
 let micStream, micOn = false, cakeFinished = false;
 const left = () => candles.filter(c => !c.classList.contains('out')).length;
@@ -820,7 +1150,7 @@ function blowOut(c) {
 }
 candles.forEach(c => c.addEventListener('click', () => { ac(); blowOut(c); }));
 $('#no-mic').addEventListener('click', () => {
-  $('#cake-sub').textContent = 'tócalas una por una 👆';
+  $('#cake-sub').textContent = 'tocalas una por una 👆';
   $('#mic-btn').style.display = 'none'; $('#no-mic').style.display = 'none';
 });
 $('#mic-btn').addEventListener('click', async () => {
@@ -830,13 +1160,13 @@ $('#mic-btn').addEventListener('click', async () => {
     micStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
   } catch (e) {
     audioMode('playback');
-    $('#cake-sub').textContent = 'no hubo micrófono 😅 tócalas para apagarlas';
+    $('#cake-sub').textContent = 'no hubo caso con el micrófono 😅 tocalas para apagarlas';
     $('#mic-btn').style.display = 'none'; $('#no-mic').style.display = 'none'; return;
   }
   micOn = true; const a = ac();
   const src = a.createMediaStreamSource(micStream), an = a.createAnalyser(); an.fftSize = 1024; src.connect(an);
   const data = new Uint8Array(an.fftSize), meter = $('#meter-i'), cake = $('#cake');
-  const btn = $('#mic-btn'); btn.classList.add('listening'); btn.textContent = '🎤 te escucho… ¡sopla!';
+  const btn = $('#mic-btn'); btn.classList.add('listening'); btn.textContent = '🎤 te escucho… ¡soplá!';
   let above = 0;
   (function loop() {
     if (!left()) return;
@@ -862,12 +1192,62 @@ async function cakeDone() {
   [523, 659, 784, 1046].forEach((f, i) => tone(f, .5, { type: 'triangle', vol: .15, when: i * .12 }));
   $('#cake-title').innerHTML = '¡Feliz 3 meses, <em></em>!';
   $('#cake-title em').textContent = CONFIG.ella;
-  $('#cake-sub').textContent = 'Tu deseo ya está en camino. Yo me encargo 😉';
+  $('#cake-sub').textContent = 'Tu deseo ya está en camino. De eso me encargo yo 😉';
   await sleep(2200); $('#cake-next').classList.remove('hidden');
 }
-$('#cake-next').addEventListener('click', () => go('s-scratch'));
+$('#cake-next').addEventListener('click', () => go('s-pact'));
 
-/* 6 · raspa y gana */
+/* 9 · contrato con firma */
+CONFIG.contrato.forEach(t => { const li = document.createElement('li'); li.textContent = t; $('#pact-list').appendChild(li); });
+const sg = $('#sign'), sgx = sg.getContext('2d');
+let sgLast = null, sgLen = 0, signed = false, sgReady = false;
+$('#pact-ok').addEventListener('change', e => {
+  if (!e.target.checked) return;
+  e.target.disabled = true; ac(); chime(784);
+  $('#pact').classList.add('small');
+  $('#pact-check').querySelector('span').textContent = 'Ahora firmá acá abajo con el dedo 👇';
+  $('#sign-wrap').classList.remove('hidden');
+  if (!sgReady) {
+    sgReady = true;
+    const r = sg.getBoundingClientRect();
+    sg.width = r.width * DPR; sg.height = r.height * DPR; sgx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    sgx.lineCap = 'round'; sgx.lineJoin = 'round'; sgx.lineWidth = 3; sgx.strokeStyle = '#f3e7cf';
+  }
+});
+const sgPos = e => { const r = sg.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+sg.addEventListener('pointerdown', e => {
+  if (signed) return; e.preventDefault();
+  try { sg.setPointerCapture(e.pointerId); } catch (_) {}
+  sgLast = sgPos(e);
+});
+sg.addEventListener('pointermove', e => {
+  if (!sgLast || signed) return;
+  const p = sgPos(e);
+  sgx.beginPath(); sgx.moveTo(sgLast.x, sgLast.y); sgx.lineTo(p.x, p.y); sgx.stroke();
+  sgLen += Math.hypot(p.x - sgLast.x, p.y - sgLast.y); sgLast = p;
+  if (sgLen > 120) $('#sign-ok').disabled = false;
+});
+['pointerup', 'pointercancel'].forEach(ev => sg.addEventListener(ev, () => sgLast = null));
+$('#sign-clear').addEventListener('click', () => {
+  if (signed) return;
+  sgx.clearRect(0, 0, sg.width, sg.height); sgLen = 0; $('#sign-ok').disabled = true;
+});
+$('#sign-ok').addEventListener('click', async () => {
+  if (signed) return; signed = true; ac();
+  $('.sign-btns').style.display = 'none';
+  thump(); vib([40, 30, 120]);
+  $('#stamp').classList.add('show');
+  // Te manda su firma como imagen (fondo oscuro para que se vea en la notificación)
+  const out = document.createElement('canvas'); out.width = sg.width; out.height = sg.height;
+  const ox = out.getContext('2d'); ox.fillStyle = '#14110b'; ox.fillRect(0, 0, out.width, out.height); ox.drawImage(sg, 0, 0);
+  out.toBlob(b => avisarImagen(b, '✍️ Firmó el contrato. Esta es su firma:'), 'image/png');
+  await sleep(500); confetti(120, innerWidth / 2, innerHeight * .64); chime(988);
+  $('#pact-check').querySelector('span').textContent = 'Listo. Ya no te podés escapar 😌';
+  await sleep(1800); $('#pact-next').classList.remove('hidden');
+});
+$('#pact-next').addEventListener('click', () => go('s-scratch'));
+
+/* 10 · raspa y gana */
 $('#p-t').textContent = CONFIG.premio.titulo; $('#p-p').textContent = CONFIG.premio.texto; $('#p-l').textContent = CONFIG.premio.letra;
 const sc = $('#scratch'), scx = sc.getContext('2d');
 let scDone = false, scLast = null, scMoves = 0, scPainted = false;
@@ -880,8 +1260,8 @@ enter['s-scratch'] = () => {
   scx.fillStyle = g; scx.fillRect(0, 0, r.width, r.height);
   for (let i = 0; i < 400; i++) { scx.fillStyle = `rgba(255,255,255,${Math.random() * .35})`; scx.fillRect(Math.random() * r.width, Math.random() * r.height, 1.5, 1.5); }
   scx.fillStyle = 'rgba(80,50,8,.75)'; scx.textAlign = 'center'; scx.textBaseline = 'middle';
-  scx.font = '600 20px Inter, sans-serif'; scx.fillText('✦  RASPA AQUÍ  ✦', r.width / 2, r.height / 2);
-  scx.font = '400 12px Inter, sans-serif'; scx.fillText('premio garantizado', r.width / 2, r.height / 2 + 26);
+  scx.font = '600 20px Inter, sans-serif'; scx.fillText('✦  RASPÁ ACÁ  ✦', r.width / 2, r.height / 2);
+  scx.font = '400 12px Inter, sans-serif'; scx.fillText('premio asegurado', r.width / 2, r.height / 2 + 26);
 };
 function scPos(e) { const r = sc.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
 sc.addEventListener('pointerdown', e => { e.preventDefault(); ac(); try { sc.setPointerCapture(e.pointerId); } catch (_) {} scLast = scPos(e); scratchAt(scLast); });
@@ -904,12 +1284,30 @@ async function scratchDone() {
   avisar('🎟️ Descubrió el vale', 3, 'tickets');
   const r = $('#ticket').getBoundingClientRect();
   confetti(180, r.left + r.width / 2, r.top + r.height / 2); chime(880); vib([100, 60, 100, 60, 400]);
-  $('#scratch-sub').textContent = 'Tómale captura y guárdalo. Es oficial 📸';
+  $('#scratch-sub').textContent = 'Sacale captura y guardalo. Es oficial 📸';
   await sleep(2400); $('#scratch-next').classList.remove('hidden');
 }
-$('#scratch-next').addEventListener('click', () => go('s-final'));
+$('#scratch-next').addEventListener('click', () => go('s-env'));
 
-/* 7 · carta */
+/* 11 · sobre con sello */
+let envOpen = false;
+enter['s-env'] = () => {
+  $('#seal-txt').textContent = [...CONFIG.ella][0] + '&' + [...CONFIG.yo][0];
+  avisar('💌 Está por abrir la carta. PREPARATE: abrí su chat de WhatsApp', 4, 'warning,love_letter');
+};
+$('#seal').addEventListener('click', async () => {
+  if (envOpen) return; envOpen = true; ac();
+  const e = $('#env');
+  vib([20, 30, 80]); noise(.35, .14, 0, 700); tone(140, .3, { vol: .4, slide: 70 });
+  e.classList.add('broken'); $('#env-sub').textContent = '';
+  const tt = $('#s-env .title'); tt.style.animation = 'none'; tt.style.transition = 'opacity .6s'; tt.style.opacity = 0;
+  await sleep(450); e.classList.add('open'); noise(.6, .05, 0, 2200);
+  await sleep(900); e.classList.add('out'); chime(660);
+  await sleep(1400); e.classList.add('gone');
+  await sleep(900); go('s-final');
+});
+
+/* 12 · carta */
 enter['s-final'] = async () => {
   const fl = $('#floaters');
   for (let i = 0; i < 22; i++) {
@@ -919,7 +1317,6 @@ enter['s-final'] = async () => {
     fl.appendChild(h);
   }
   const L = $('#letter');
-  avisar('💌 Está leyendo la carta. PREPÁRATE: abre su chat de WhatsApp', 4, 'warning,love_letter');
   await sleep(600); L.querySelector('.hello').classList.add('show');
   for (const t of CONFIG.carta) {
     const p = document.createElement('p'); p.textContent = t; L.appendChild(p);
@@ -936,10 +1333,10 @@ enter['s-final'] = async () => {
   await sleep(5000); go('s-real');
 };
 
-/* 8 · llamada real: te avisa, tú la llamas por WhatsApp */
+/* 13 · llamada real: te avisa y vos la llamás por WhatsApp */
 let realWaiting = false, fallbackT, hiddenAt = 0;
 enter['s-real'] = async () => {
-  avisar('📲 ¡TERMINÓ! LLÁMALA YA POR WHATSAPP', 5, 'rotating_light');
+  avisar('📲 ¡TERMINÓ! LLAMALA YA POR WHATSAPP', 5, 'rotating_light');
   const show = id => $(id).classList.add('show');
   await sleep(1200); show('#real-1');
   await sleep(2800); show('#real-2');
@@ -957,8 +1354,8 @@ function showFallback() {
   a.href = `https://wa.me/${num}?text=${encodeURIComponent('Ya llegué al final… ¿y mi llamada? 🥺💛')}`;
   a.classList.remove('hidden');
 }
-$('#real-wa').addEventListener('click', () => avisar('🥺 Tocó "¿No te ha llamado?". Te está esperando, ¡LLAMA!', 5, 'rotating_light,pleading_face'));
-// Si sale de la página más de 15 s (contestó tu llamada), al volver ve el cierre.
+$('#real-wa').addEventListener('click', () => avisar('🥺 Tocó "¿No te llamó?". Te está esperando, ¡LLAMALA!', 5, 'rotating_light,pleading_face'));
+// Si sale de la página más de 15 s (atendió tu llamada), al volver ve el cierre.
 document.addEventListener('visibilitychange', () => {
   if (!realWaiting) return;
   if (document.hidden) { hiddenAt = Date.now(); return; }
@@ -969,10 +1366,10 @@ function afterCall() {
   realWaiting = false; clearTimeout(fallbackT);
   $('#real-phone').classList.remove('show'); $('#real-phone').style.display = 'none';
   $('#real-1').textContent = 'Lo sabía.';
-  $('#real-2').textContent = 'La distancia no tiene nada que hacer contra nosotros.';
+  $('#real-2').textContent = 'La distancia no puede con nosotros.';
   $('#real-3').innerHTML = 'Feliz 3 meses, <em></em> 💛';
   $('#real-3 em').textContent = CONFIG.ella;
-  $('#real-4').textContent = 'gracias por contestar siempre';
+  $('#real-4').textContent = 'gracias por atenderme siempre';
   $('#real-wa').classList.add('hidden');
   $('#real-again').classList.add('show');
   setTimeout(() => confetti(180), 600);
