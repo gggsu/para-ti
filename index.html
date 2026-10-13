@@ -20,7 +20,7 @@ const CONFIG = {
   etiqueta: "celular",                // lo que sale arriba de tu nombre: "celular", "iPhone", "WhatsApp audio"...
   inicio: "2026-07-13T00:00:00",      // el día que empezaron (año-mes-díaThh:mm)
 
-  foto: "",                           // opcional: "fotos/yo.jpg" -> tu foto de fondo en la llamada (vertical)
+  foto: "fotos/3.jpg",                // foto de fondo en la llamada falsa (vertical, como póster de contacto)
   audioLlamada: "",                   // opcional: "nota.mp3" -> tu voz de verdad al atender
   musica: "",                         // opcional: "cancion.mp3" -> su canción, arranca después de la llamada
 
@@ -36,7 +36,7 @@ const CONFIG = {
     "Esta vez no es para mirar nomás…",
     "es para sentirlo.",
     "Hacé todo lo que te vaya pidiendo, ¿dale?",
-    "Te quiero. Ahora corto 💛"
+    "Te amo. Ahora corto 💛"
   ],
 
   // ¿Cuánto me conocés? (correcta = número de la opción buena, empezando en 0)
@@ -66,9 +66,14 @@ const CONFIG = {
     { titulo: "Hoy",                    texto: "3 meses, un montón de kilómetros, y te volvería a elegir. Una y otra vez." }
   ],
 
-  // Polaroids: poné las fotos en la carpeta "fotos" (si la lista queda vacía, esta pantalla no aparece)
+  // Polaroids: fotos en la carpeta "fotos" (si la lista queda vacía, esta pantalla no aparece)
+  // pos = qué parte de la foto se ve en el recuadro cuadrado ("50% 30%" = más arriba)
   fotos: [
-    // { src: "fotos/1.jpg", texto: "La primera videollamada" },
+    { src: "fotos/2.jpg", texto: "Vos, yo y los cerros ⛰️", pos: "50% 35%" },
+    { src: "fotos/3.jpg", texto: "Esa sonrisa que me desarma", pos: "50% 55%" },
+    { src: "fotos/1.jpg", texto: "Los tres. Mi familia favorita 🐶", pos: "50% 45%" },
+    { src: "fotos/5.jpg", texto: "Modo fiaca con vos 😌", pos: "60% 50%" },
+    { src: "fotos/4.jpg", texto: "Mi lugar favorito: pegadito a vos", pos: "50% 52%" }
   ],
 
   // El frasco: una razón por papelito
@@ -100,13 +105,23 @@ const CONFIG = {
     letra: "Válido solo para vos · No vence"
   },
 
+  // La carta: cada párrafo aparece cuando ella toca la pantalla, así lee a su ritmo
+  saludo: "Hola amor",
   carta: [
-    "No sé si te lo digo lo suficiente, así que te lo dejo por escrito:",
-    "Estos 3 meses fueron de lo más lindo que me pasó. Me hacés reír, me das paz y me dan ganas de ser mejor.",
-    "Gracias por elegirme todos los días, incluso esos días en que no soy tan fácil.",
-    "Y si esto se siente así a los 3 meses… no me imagino lo que viene."
+    "Hace bastante que no hago esto, ¿no? Ya tocaba volver a las bases. Además me gusta hacerlo, siento que puedo explotar un poco lo que sé y espero que a vos también te guste.",
+    "3 meses, amor. Vuela el tiempo. 3 meses y los que faltan, millones y millones. Esto recién empieza y aun así se siente como si tuviéramos años de estar juntos, o por lo menos yo lo siento así.",
+    "Entre otras cosas también siento que nada podría rompernos. Tengo una seguridad y una confianza en vos muy grande. Sos mi cable a tierra, sos mi luz y mi guía en los momentos más oscuros.",
+    "Tenés el don de hacerme sentir que puedo con todo cuando ni yo mismo creo en mí. Podés cambiarme los ánimos en cuestión de segundos y, qué peligroso, pero a la vez qué tranquilidad me da saber que solo vos podés hacerlo, que nadie más me va a ver siendo esto o haciendo este tipo de cosas, porque nadie se merece todo el amor que tengo para dar excepto vos.",
+    "Vos te merecés todo. Te merecés todas mis miradas, todas mis risas, todas mis ganas (🥵). Vos te merecés todo de mí, hasta mi último suspiro, porque solo vos sabés lo que es bancarme, en las buenas y en las no tan buenas.",
+    "Vos estás siempre y nunca pensaría en alguien más que no seas vos. Sos mi escape, sos mi salida, sos mi salvación y mi solución a todo. Sos muy necesaria para mí y muy pero muy importante, no te das una idea de cuánto.",
+    "Y acá estoy, tan enamorado como el primer día. No, miento: más enamorado y más perdido en vos, más baboso y más caliente, cachondo, arrecho, loco, desquiciado, demente, obsesionado, etc., etc.",
+    "Cada vez más preso de tu carita preciosa que me lleva hasta el cielo y me deja volando entre las nubes, encadenado a la hermosura de tu cuerpo que para mí es único, porque vos sos única y amo cada parte de vos.",
+    "Pero más te amo por cómo sos: un ser lleno de buenas intenciones, tan fuerte, tan dura, tan inteligente, tan exigente, tan responsable, cuidadora, tan MÍA.",
+    "Una muy linda persona a la que le agradezco todo lo que soy, porque obviamente hoy no sería este tipo si no fuera por vos. Me alegro muchísimo de que hayas llegado a mi vida y ojalá todo esto sea eterno, porque no quiero una vida sin vos.",
+    "Te amo muchísimo, amor. 70 veces 7, infinitamente, ilimitadamente."
   ],
-  final: "Te quiero. Feliz 3 meses 💛"
+  final: "Te amo y sos mi vida, mi mundo y todo para mí 💛",
+  posdata: "Gracias por estos 3 meses. Vivir y compartir los días con vos es un sueño 💛"
 };
 </script>
 
@@ -397,7 +412,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .floaters span{position:absolute;bottom:-40px;color:var(--accent);opacity:0;animation:floatup linear infinite}
 .floaters span:nth-child(3n){color:var(--pistache)}
 @keyframes floatup{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:.5}100%{transform:translateY(-115vh) rotate(40deg);opacity:0}}
-.letter{position:relative;color:var(--accent-soft);max-width:380px;width:100%;margin:auto 0;padding:30px 0}
+.letter{position:relative;color:var(--accent-soft);max-width:380px;width:100%;padding:24px 0 45vh}
+.letter .ps{font-size:clamp(20px,5.6vw,24px);margin-top:22px;color:rgba(243,231,207,.8)}
+.tap-hint{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 18px);font-size:13px;letter-spacing:.06em;color:rgba(243,231,207,.6);
+  pointer-events:none;opacity:0;transition:opacity .6s}
+.tap-hint.show{opacity:1;animation:hintbob 2s ease-in-out infinite}
+@keyframes hintbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 .letter p{font-family:Caveat,cursive;font-size:clamp(22px,6.2vw,27px);line-height:1.35;text-align:left;margin-bottom:16px;
   opacity:0;transform:translateY(10px);transition:opacity 1.4s,transform 1.4s}
 .letter p.show,.final-line.show,.sign.show,.again.show{opacity:1;transform:none}
@@ -532,7 +552,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 <!-- 7 · frasco de razones -->
 <section id="s-jar" class="scene">
-  <h2 class="title" id="jar-title">Razones por las que te <em>quiero</em></h2>
+  <h2 class="title" id="jar-title">Razones por las que te <em>amo</em></h2>
   <p class="sub" id="jar-sub">tocá el frasco</p>
   <button class="jar" id="jar" aria-label="Sacar una razón del frasco">
     <div class="jar-lid"></div><div class="jar-neck"></div><div class="jar-body" id="jar-body"></div>
@@ -613,8 +633,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 <section id="s-final" class="scene">
   <div class="floaters" id="floaters"></div>
   <div class="letter" id="letter">
-    <p class="hello"><span data-ella></span>:</p>
+    <p class="hello" id="hello"></p>
   </div>
+  <p class="tap-hint" id="tap-hint">tocá para seguir leyendo ↓</p>
 </section>
 
 <!-- 13 · llamada real -->
@@ -825,7 +846,7 @@ $('#message').addEventListener('click', () => { toast('Nada de mensajes. Atendé
 document.querySelectorAll('.ios-incall [data-toggle]').forEach(b => b.addEventListener('click', () => { b.classList.toggle('on'); vib(15); }));
 $('#facetime').addEventListener('click', () => { toast('Hoy solo voz 💛'); vib(15); });
 $('#more').addEventListener('click', () => { toast('Después te cuento 😉'); vib(15); });
-$('#keypad').addEventListener('click', () => { toast('Marcá 1 si me querés 😏'); vib(15); });
+$('#keypad').addEventListener('click', () => { toast('Marcá 1 si me amás 😏'); vib(15); });
 $('#end').addEventListener('click', () => { toast('Todavía no cortes 🥺 escuchame'); vib([30, 60, 30]); });
 $('#accept').addEventListener('click', async () => {
   ac(); clearInterval(ringT); vib(0); $('#toast').classList.remove('show');
@@ -1056,7 +1077,11 @@ enter['s-photos'] = () => {
   [...FOTOS].reverse().forEach(f => {
     const c = document.createElement('div'); c.className = 'pol';
     c._rot = (Math.random() * 10 - 5).toFixed(1); c.style.transform = `rotate(${c._rot}deg)`;
-    if (f.src) { const img = document.createElement('img'); img.src = f.src; img.alt = ''; img.draggable = false; c.appendChild(img); }
+    if (f.src) {
+      const img = document.createElement('img'); img.src = f.src; img.alt = ''; img.draggable = false;
+      if (f.pos) img.style.objectPosition = f.pos;
+      c.appendChild(img);
+    }
     else { const ph = document.createElement('div'); ph.className = 'ph'; ph.textContent = '📷'; c.appendChild(ph); }
     const p = document.createElement('p'); p.textContent = f.texto || ''; c.appendChild(p);
     st.appendChild(c); dragCard(c);
@@ -1316,22 +1341,37 @@ enter['s-final'] = async () => {
     h.style.animationDuration = (9 + Math.random() * 10) + 's'; h.style.animationDelay = (-Math.random() * 15) + 's';
     fl.appendChild(h);
   }
-  const L = $('#letter');
-  await sleep(600); L.querySelector('.hello').classList.add('show');
-  for (const t of CONFIG.carta) {
-    const p = document.createElement('p'); p.textContent = t; L.appendChild(p);
-    await sleep(500); p.classList.add('show'); p.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    await sleep(1600 + t.length * 32);
-  }
-  const f = document.createElement('div'); f.className = 'final-line'; f.textContent = CONFIG.final; L.appendChild(f);
-  await sleep(400); f.classList.add('show'); vib([300, 150, 300]);
-  [392, 523, 659, 784, 1046].forEach((fq, i) => tone(fq, 2.2, { vol: .06, when: i * .2 }));
-  const s = document.createElement('div'); s.className = 'sign'; s.textContent = '— ' + CONFIG.yo; L.appendChild(s);
-  await sleep(2200); s.classList.add('show');
-  s.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  await sleep(600); confetti(120, innerWidth / 2, innerHeight * .8);
-  await sleep(5000); go('s-real');
+  $('#hello').textContent = CONFIG.saludo || CONFIG.ella;
+  await sleep(600); $('#hello').classList.add('show');
+  await sleep(900); letterNext();
 };
+// Cada toque muestra el párrafo siguiente, así ella lee a su ritmo
+let lIdx = 0, lLock = false, lDone = false;
+const hint = $('#tap-hint');
+function revealInLetter(el) {
+  const box = $('#s-final');
+  $('#letter').appendChild(el); void el.offsetWidth; el.classList.add('show');
+  box.scrollTo({ top: el.getBoundingClientRect().top + box.scrollTop - innerHeight * .22, behavior: 'smooth' });
+}
+async function letterNext() {
+  if (lLock || lDone) return;
+  lLock = true; hint.classList.remove('show');
+  if (lIdx < CONFIG.carta.length) {
+    const p = document.createElement('p'); p.textContent = CONFIG.carta[lIdx++]; revealInLetter(p);
+    if (lIdx === CONFIG.carta.length) avisar('💌 Va por el último párrafo de la carta. ¡Tené WhatsApp listo!', 4, 'warning,love_letter');
+    await sleep(1400); lLock = false; if (!lDone) hint.classList.add('show');
+    return;
+  }
+  lDone = true;
+  const f = document.createElement('div'); f.className = 'final-line'; f.textContent = CONFIG.final; revealInLetter(f);
+  vib([300, 150, 300]); [392, 523, 659, 784, 1046].forEach((fq, i) => tone(fq, 2.2, { vol: .06, when: i * .2 }));
+  if (CONFIG.posdata) { await sleep(2600); const ps = document.createElement('p'); ps.className = 'ps'; ps.textContent = CONFIG.posdata; revealInLetter(ps); }
+  await sleep(2400);
+  const s = document.createElement('div'); s.className = 'sign'; s.textContent = '— ' + CONFIG.yo; revealInLetter(s);
+  await sleep(600); confetti(120, innerWidth / 2, innerHeight * .8);
+  await sleep(6500); go('s-real');
+}
+$('#s-final').addEventListener('click', () => { ac(); letterNext(); });
 
 /* 13 · llamada real: te avisa y vos la llamás por WhatsApp */
 let realWaiting = false, fallbackT, hiddenAt = 0;
