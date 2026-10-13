@@ -1166,7 +1166,7 @@ $('#jar-next').addEventListener('click', () => go('s-cake'));
 
 /* 8 · pastel */
 const candles = [...document.querySelectorAll('.candle')];
-let micStream, micOn = false, cakeFinished = false;
+let micStream, micCtx, micOn = false, cakeFinished = false;
 const left = () => candles.filter(c => !c.classList.contains('out')).length;
 function blowOut(c) {
   if (!c || c.classList.contains('out')) return;
@@ -1188,19 +1188,40 @@ $('#mic-btn').addEventListener('click', async () => {
     $('#cake-sub').textContent = 'no hubo caso con el micrófono 😅 tocalas para apagarlas';
     $('#mic-btn').style.display = 'none'; $('#no-mic').style.display = 'none'; return;
   }
-  micOn = true; const a = ac();
-  const src = a.createMediaStreamSource(micStream), an = a.createAnalyser(); an.fftSize = 1024; src.connect(an);
+  micOn = true;
+  // En iPhone, al prender el micrófono el sistema pausa el audio que ya venía sonando:
+  // se escucha con un motor de audio propio y se reactiva el principal.
+  const mc = new (window.AudioContext || window.webkitAudioContext)();
+  try { await mc.resume(); } catch (_) {}
+  setTimeout(() => AC && AC.resume(), 300);
+  const src = mc.createMediaStreamSource(micStream), an = mc.createAnalyser(); an.fftSize = 1024; src.connect(an);
+  micCtx = mc;
   const data = new Uint8Array(an.fftSize), meter = $('#meter-i'), cake = $('#cake');
-  const btn = $('#mic-btn'); btn.classList.add('listening'); btn.textContent = '🎤 te escucho… ¡soplá!';
-  let above = 0;
-  (function loop() {
-    if (!left()) return;
+  const btn = $('#mic-btn'); btn.classList.add('listening'); btn.textContent = '🎤 un segundo…';
+  const level = () => {
     an.getByteTimeDomainData(data);
     let sum = 0; for (let i = 0; i < data.length; i++) { const v = (data[i] - 128) / 128; sum += v * v; }
-    const rms = Math.sqrt(sum / data.length), w = Math.min(1, rms * 5);
+    return Math.sqrt(sum / data.length);
+  };
+  // Calibra con el ruido del ambiente (medio segundo) para no depender de un umbral fijo
+  let base = 0, n = 0; const t0 = performance.now();
+  while (performance.now() - t0 < 600) { if (mc.state !== 'running') mc.resume(); base += level(); n++; await sleep(30); }
+  base = n ? base / n : 0;
+  const thr = Math.max(.045, base * 2.5 + .02);
+  btn.textContent = '🎤 te escucho… ¡soplá!';
+  let above = 0, maxSeen = 0; const started = performance.now();
+  (function loop() {
+    if (!left()) return;
+    if (mc.state !== 'running') mc.resume();
+    const rms = level(), w = Math.min(1, rms / (thr * 2.2));
+    maxSeen = Math.max(maxSeen, rms);
     cake.style.setProperty('--wind', w.toFixed(2)); meter.style.width = (w * 100) + '%';
-    if (rms > .11) { if (++above > 9) { blowOut(candles.find(c => !c.classList.contains('out'))); above = 0; } }
+    if (rms > thr) { if (++above > 5) { blowOut(candles.find(c => !c.classList.contains('out'))); above = 0; } }
     else above = Math.max(0, above - 1);
+    // Si en 5 s no entró nada de sonido, el micrófono no está llegando: que las apague tocando
+    if (performance.now() - started > 5000 && maxSeen < .004 && !btn._warned) {
+      btn._warned = true; $('#cake-sub').textContent = 'no te escucho 😅 tocá las velas para apagarlas';
+    }
     requestAnimationFrame(loop);
   })();
 });
@@ -1208,7 +1229,8 @@ async function cakeDone() {
   if (cakeFinished) return; cakeFinished = true;
   avisar('🎂 Sopló las velas', 3, 'birthday');
   if (micStream) micStream.getTracks().forEach(t => t.stop());
-  audioMode('playback');
+  if (micCtx) micCtx.close().catch(() => {});
+  audioMode('playback'); setTimeout(() => AC && AC.resume(), 200);
   $('#cake').style.setProperty('--wind', 0);
   $('#cake-glow').style.opacity = 0; $('#s-cake').classList.add('dark');
   $('#cake-ctrl').classList.add('hidden');
